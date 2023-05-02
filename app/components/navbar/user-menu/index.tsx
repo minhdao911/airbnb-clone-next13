@@ -30,7 +30,7 @@ const UserMenu = () => {
 
       {isOpen && (
         <div className="absolute right-0 top-12 py-2 text-sm w-[40vw] md:w-4/5 rounded-xl bg-white shadow-md border-t-[1px] cursor-pointer">
-          <MenuItem text="Sign up" isSelected onClick={() => {}} />
+          <MenuItem text="Sign up" onClick={() => {}} />
           <MenuItem text="Log in" onClick={() => {}} />
           <hr className="my-2" />
           <MenuItem text="Airbnb your home" onClick={() => {}} />

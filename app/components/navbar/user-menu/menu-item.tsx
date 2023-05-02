@@ -2,15 +2,15 @@
 
 interface MenuItemProps {
   text: string;
-  isSelected?: boolean;
+  highlighted?: boolean;
   onClick: () => void;
 }
 
-const MenuItem = ({ text, isSelected, onClick }: MenuItemProps) => {
+const MenuItem = ({ text, highlighted, onClick }: MenuItemProps) => {
   return (
     <div
       className={`px-4 py-3 hover:bg-neutral-100 transition ${
-        isSelected ? "font-semibold" : ""
+        highlighted ? "font-semibold" : ""
       }`}
       onClick={onClick}
     >
