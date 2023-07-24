@@ -1,12 +1,19 @@
 "use client";
 
+import useRegisterModal from "@/app/hooks/use-register-modal";
 import { useState } from "react";
 import { BiGlobe, BiMenu } from "react-icons/bi";
 import Avatar from "../../avatar";
 import MenuItem from "./menu-item";
 
 const UserMenu = () => {
+  const registerModal = useRegisterModal();
   const [isOpen, setIsOpen] = useState(false);
+
+  const handleMenuItemClick = (func: any) => {
+    func();
+    setIsOpen(false);
+  };
 
   return (
     <div className="relative hidden md:flex flex-row items-center justify-center transition">
@@ -30,8 +37,19 @@ const UserMenu = () => {
 
       {isOpen && (
         <div className="absolute right-0 top-12 py-2 text-sm w-[40vw] md:w-4/5 rounded-xl bg-white shadow-md border-t-[1px] cursor-pointer">
-          <MenuItem text="Sign up" onClick={() => {}} />
-          <MenuItem text="Log in" onClick={() => {}} />
+          <MenuItem
+            highlighted
+            text="Sign up"
+            onClick={() => {
+              handleMenuItemClick(registerModal.onOpen);
+            }}
+          />
+          <MenuItem
+            text="Log in"
+            onClick={() => {
+              handleMenuItemClick(registerModal.onOpen);
+            }}
+          />
           <hr className="my-2" />
           <MenuItem text="Airbnb your home" onClick={() => {}} />
           <MenuItem text="Help" onClick={() => {}} />
