@@ -1,7 +1,7 @@
 "use client";
 
 import useAuthModal from "@/app/hooks/use-auth-modal";
-import { User } from "@prisma/client";
+import { SafeUser } from "@/app/types";
 import { signOut } from "next-auth/react";
 import { useState } from "react";
 import { BiGlobe, BiMenu } from "react-icons/bi";
@@ -9,7 +9,7 @@ import Avatar from "../../avatar";
 import MenuItem from "./menu-item";
 
 interface UserMenuProps {
-  currentUser?: User | null;
+  currentUser?: SafeUser | null;
 }
 
 const UserMenu = ({ currentUser }: UserMenuProps) => {
