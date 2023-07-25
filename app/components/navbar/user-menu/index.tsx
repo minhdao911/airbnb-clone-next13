@@ -1,19 +1,14 @@
 "use client";
 
-import useRegisterModal from "@/app/hooks/use-register-modal";
+import useAuthModal from "@/app/hooks/use-auth-modal";
 import { useState } from "react";
 import { BiGlobe, BiMenu } from "react-icons/bi";
 import Avatar from "../../avatar";
 import MenuItem from "./menu-item";
 
 const UserMenu = () => {
-  const registerModal = useRegisterModal();
+  const authModal = useAuthModal();
   const [isOpen, setIsOpen] = useState(false);
-
-  const handleMenuItemClick = (func: any) => {
-    func();
-    setIsOpen(false);
-  };
 
   return (
     <div className="relative hidden md:flex flex-row items-center justify-center transition">
@@ -41,13 +36,15 @@ const UserMenu = () => {
             highlighted
             text="Sign up"
             onClick={() => {
-              handleMenuItemClick(registerModal.onOpen);
+              authModal.onOpen("register");
+              setIsOpen(false);
             }}
           />
           <MenuItem
             text="Log in"
             onClick={() => {
-              handleMenuItemClick(registerModal.onOpen);
+              authModal.onOpen("login");
+              setIsOpen(false);
             }}
           />
           <hr className="my-2" />
