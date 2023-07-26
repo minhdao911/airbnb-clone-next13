@@ -114,15 +114,15 @@ const AuthModal = () => {
           type="outline"
           label="Continue with Google"
           icon={FcGoogle}
-          onClick={() => {}}
+          onClick={() => signIn("google")}
         />
         <Button
           type="outline"
           label="Continue with Github"
           icon={AiFillGithub}
-          onClick={() => {}}
+          onClick={() => signIn("github")}
         />
-        {isRegister && (
+        {isRegister ? (
           <div className="flex flex-row items-center justify-center gap-2 text-sm text-neutral-500">
             <div>Already have an account?</div>
             <div
@@ -132,6 +132,18 @@ const AuthModal = () => {
               }}
             >
               Log in
+            </div>
+          </div>
+        ) : (
+          <div className="flex flex-row items-center justify-center gap-2 text-sm text-neutral-500">
+            <div>First time using Airbnb?</div>
+            <div
+              className="text-neutral-800 cursor-pointer hover:underline"
+              onClick={() => {
+                authModal.onOpen("register");
+              }}
+            >
+              Create an account
             </div>
           </div>
         )}

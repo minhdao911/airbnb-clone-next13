@@ -32,7 +32,7 @@ const UserMenu = ({ currentUser }: UserMenuProps) => {
       >
         <BiMenu size={20} />
         <div className="absolute right-1.5">
-          <Avatar />
+          <Avatar src={currentUser?.image} />
         </div>
       </div>
 
