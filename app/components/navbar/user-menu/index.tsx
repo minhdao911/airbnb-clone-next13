@@ -3,22 +3,36 @@
 import useAuthModal from "@/app/hooks/use-auth-modal";
 import { SafeUser } from "@/app/types";
 import { signOut } from "next-auth/react";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { BiGlobe, BiMenu } from "react-icons/bi";
 import Avatar from "../../avatar";
 import MenuItem from "./menu-item";
+import { useRouter } from "next/navigation";
 
 interface UserMenuProps {
   currentUser?: SafeUser | null;
 }
 
 const UserMenu = ({ currentUser }: UserMenuProps) => {
+  const router = useRouter();
+
   const authModal = useAuthModal();
   const [isOpen, setIsOpen] = useState(false);
 
+  const onRent = useCallback(() => {
+    if (!currentUser) {
+      return authModal.onOpen("login");
+    }
+
+    router.push("/become-a-host");
+  }, [currentUser, authModal, router]);
+
   return (
     <div className="relative hidden md:flex flex-row items-center justify-center transition">
-      <div className="text-sm font-semibold px-4 py-3 rounded-full hover:bg-neutral-100 transition cursor-pointer">
+      <div
+        className="text-sm font-semibold px-4 py-3 rounded-full hover:bg-neutral-100 transition cursor-pointer"
+        onClick={onRent}
+      >
         Airbnb your home
       </div>
       <div className="p-3 mr-2 rounded-full hover:bg-neutral-100 transition cursor-pointer">
@@ -43,7 +57,7 @@ const UserMenu = ({ currentUser }: UserMenuProps) => {
               <MenuItem highlighted text="Trips" onClick={() => {}} />
               <MenuItem highlighted text="Wishlists" onClick={() => {}} />
               <hr className="my-2" />
-              <MenuItem text="Airbnb your home" onClick={() => {}} />
+              <MenuItem text="Airbnb your home" onClick={onRent} />
               <MenuItem text="Log out" onClick={() => signOut()} />
             </>
           ) : (
@@ -64,7 +78,7 @@ const UserMenu = ({ currentUser }: UserMenuProps) => {
                 }}
               />
               <hr className="my-2" />
-              <MenuItem text="Airbnb your home" onClick={() => {}} />
+              <MenuItem text="Airbnb your home" onClick={onRent} />
               <MenuItem text="Help" onClick={() => {}} />
             </>
           )}
