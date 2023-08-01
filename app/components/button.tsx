@@ -26,7 +26,8 @@ const Button: FunctionComponent<ButtonProps> = ({
     primary: "bg-rose-500 border-rose-500 text-white hover:opacity-80",
     secondary: "bg-gray-900 border-black text-white hover:opacity-80",
     outline: "text-sm bg-white border-black text-black hover:bg-neutral-100",
-    ghost: "bg-transparent text-black underline hover:bg-neutral-100",
+    ghost:
+      "bg-transparent text-black underline hover:bg-neutral-100 border-none",
   };
   return (
     <button

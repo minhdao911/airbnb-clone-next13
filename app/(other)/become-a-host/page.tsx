@@ -1,8 +1,11 @@
 "use client";
 
 import { FunctionComponent, useState } from "react";
+import { FieldValues, useForm } from "react-hook-form";
 import Button from "@/app/components/button";
 import Heading from "@/app/components/heading";
+import CategoryStep from "@/app/components/listing-steps/category";
+import { FaAirbnb } from "react-icons/fa";
 
 enum STEPS {
   CATEGORY = 0,
@@ -19,6 +22,36 @@ const BecomeAHost: FunctionComponent<BecomeAHostProps> = () => {
   const [step, setStep] = useState(STEPS.CATEGORY);
   const [started, setStarted] = useState(false);
 
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+    reset,
+  } = useForm<FieldValues>({
+    defaultValues: {
+      category: "",
+      location: null,
+      guestCount: 1,
+      roomCount: 1,
+      bathroomCount: 1,
+      imageSrc: "",
+      price: 1,
+      title: "",
+      description: "",
+    },
+  });
+
+  const category = watch("category");
+  const setCustomValue = (id: string, value: any) => {
+    setValue(id, value, {
+      shouldValidate: true,
+      shouldDirty: true,
+      shouldTouch: true,
+    });
+  };
+
   const onBack = () => {
     setStep((value) => (value - 1 < 0 ? 0 : value - 1));
   };
@@ -32,13 +65,14 @@ const BecomeAHost: FunctionComponent<BecomeAHostProps> = () => {
       return (
         <div
           className="
-            h-full
             flex
             flex-row
             gap-10
             items-center
             justify-center
+            m-auto
           "
+          style={{ height: "calc(100vh - 198px)", maxWidth: "60rem" }}
         >
           <Heading
             title="It’s easy to get started on Airbnb"
@@ -71,6 +105,42 @@ const BecomeAHost: FunctionComponent<BecomeAHostProps> = () => {
           </div>
         </div>
       );
+    } else {
+      let Component;
+      switch (step) {
+        case STEPS.CATEGORY: {
+          Component = (
+            <CategoryStep
+              selected={category}
+              onCategoryClick={(category) =>
+                setCustomValue("category", category)
+              }
+            />
+          );
+          break;
+        }
+        default:
+          return null;
+      }
+
+      return (
+        <div
+          className="
+            h-fit
+            flex
+            flex-col
+            gap-8
+            overflow-auto
+            no-scrollbar
+            p-3
+            px-5
+            m-auto
+          "
+          style={{ maxHeight: "calc(100vh - 218px)", maxWidth: "40rem" }}
+        >
+          {Component}
+        </div>
+      );
     }
   };
 
@@ -79,15 +149,19 @@ const BecomeAHost: FunctionComponent<BecomeAHostProps> = () => {
       className="
         w-full
         h-full
-        flex
-        flex-col
+        relative
         bg-white
       "
     >
-      <div className="flex-1 m-auto" style={{ maxWidth: "60rem" }}>
-        {bodyContent()}
+      <div className="flex justify-between p-8 px-10">
+        <FaAirbnb size={35} />
+        <div className="p-2 px-4 border rounded-full text-sm cursor-pointer hover:border-black transition">
+          Save & exit
+        </div>
       </div>
-      <div className="w-full p-5">
+      {/* <div className="flex-1 m-auto">{bodyContent()}</div> */}
+      {bodyContent()}
+      <div className="absolute bottom-0 left-0 w-full p-5 px-10 border-t-4 bg-white">
         {started ? (
           <div
             className="
@@ -96,8 +170,21 @@ const BecomeAHost: FunctionComponent<BecomeAHostProps> = () => {
               justify-between
             "
           >
-            <Button type="ghost" label="Back" width="fit" />
-            <Button type="secondary" label="Next" width="fit" />
+            <Button
+              type="ghost"
+              label="Back"
+              width="fit"
+              onClick={() => {
+                if (step === STEPS.CATEGORY) setStarted(false);
+                else setStep(step - 1);
+              }}
+            />
+            <Button
+              type="secondary"
+              label="Next"
+              width="fit"
+              onClick={() => setStep(step + 1)}
+            />
           </div>
         ) : (
           <div
