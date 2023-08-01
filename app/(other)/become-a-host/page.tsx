@@ -6,6 +6,7 @@ import Button from "@/app/components/button";
 import Heading from "@/app/components/heading";
 import CategoryStep from "@/app/components/listing-steps/category";
 import { FaAirbnb } from "react-icons/fa";
+import LocationStep from "@/app/components/listing-steps/location";
 
 enum STEPS {
   CATEGORY = 0,
@@ -15,6 +16,8 @@ enum STEPS {
   DESCRIPTION = 4,
   PRICE = 5,
 }
+
+const source = `https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_MAPS_API_KEY}&libraries=places`;
 
 interface BecomeAHostProps {}
 
@@ -117,6 +120,10 @@ const BecomeAHost: FunctionComponent<BecomeAHostProps> = () => {
               }
             />
           );
+          break;
+        }
+        case STEPS.LOCATION: {
+          Component = <LocationStep />;
           break;
         }
         default:
