@@ -1,6 +1,6 @@
 "use client";
 
-import { FunctionComponent, useState } from "react";
+import React, { FunctionComponent, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import Button from "@/app/components/button";
 import Heading from "@/app/components/heading";
@@ -24,6 +24,7 @@ interface BecomeAHostProps {}
 const BecomeAHost: FunctionComponent<BecomeAHostProps> = () => {
   const [step, setStep] = useState(STEPS.CATEGORY);
   const [started, setStarted] = useState(false);
+  const [nextStepDisabled, setNextStepDisabled] = useState(true);
 
   const {
     register,
@@ -61,6 +62,7 @@ const BecomeAHost: FunctionComponent<BecomeAHostProps> = () => {
 
   const onNext = () => {
     setStep((value) => value + 1);
+    setNextStepDisabled(true);
   };
 
   const bodyContent = () => {
@@ -115,15 +117,23 @@ const BecomeAHost: FunctionComponent<BecomeAHostProps> = () => {
           Component = (
             <CategoryStep
               selected={category}
-              onCategoryClick={(category) =>
-                setCustomValue("category", category)
-              }
+              setValue={(category) => {
+                setCustomValue("category", category);
+                setNextStepDisabled(false);
+              }}
             />
           );
           break;
         }
         case STEPS.LOCATION: {
-          Component = <LocationStep />;
+          Component = (
+            <LocationStep
+              setValue={(coords) => {
+                setCustomValue("location", `${coords.lat}, ${coords.lng}`);
+                setNextStepDisabled(false);
+              }}
+            />
+          );
           break;
         }
         default:
@@ -183,14 +193,15 @@ const BecomeAHost: FunctionComponent<BecomeAHostProps> = () => {
               width="fit"
               onClick={() => {
                 if (step === STEPS.CATEGORY) setStarted(false);
-                else setStep(step - 1);
+                else onBack();
               }}
             />
             <Button
               type="secondary"
               label="Next"
               width="fit"
-              onClick={() => setStep(step + 1)}
+              disabled={nextStepDisabled}
+              onClick={onNext}
             />
           </div>
         ) : (

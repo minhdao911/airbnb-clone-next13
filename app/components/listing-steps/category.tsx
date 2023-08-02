@@ -1,6 +1,6 @@
 "use client";
 
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent } from "react";
 import Heading from "../heading";
 import { categories } from "../navbar/categories";
 
@@ -8,12 +8,12 @@ type Category = (typeof categories)[0];
 
 interface CategoryStepProps {
   selected: Category;
-  onCategoryClick: (category: Category) => void;
+  setValue: (category: Category) => void;
 }
 
 const CategoryStep: FunctionComponent<CategoryStepProps> = ({
   selected,
-  onCategoryClick,
+  setValue,
 }) => {
   return (
     <>
@@ -55,7 +55,9 @@ const CategoryStep: FunctionComponent<CategoryStepProps> = ({
                     : "bg-white"
                 }
               `}
-              onClick={() => onCategoryClick(item)}
+              onClick={() => {
+                setValue(item);
+              }}
             >
               <Icon size={25} />
               {item.label}

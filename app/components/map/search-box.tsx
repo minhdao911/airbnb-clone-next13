@@ -2,12 +2,22 @@
 import { FunctionComponent, useEffect, useMemo, useState } from "react";
 import { IoLocationSharp } from "react-icons/io5";
 import { HiBuildingOffice2 } from "react-icons/hi2";
+import { FaLocationArrow } from "react-icons/fa";
+import Loader from "../loader";
 
 interface SearchBoxProps {
+  locationText: string;
+  locationLoading: boolean;
   onPlaceSelected: (placeId: string) => void;
+  onUserLocationSelected: () => void;
 }
 
-const SearchBox: FunctionComponent<SearchBoxProps> = ({ onPlaceSelected }) => {
+const SearchBox: FunctionComponent<SearchBoxProps> = ({
+  locationText,
+  locationLoading,
+  onPlaceSelected,
+  onUserLocationSelected,
+}) => {
   const autoCompleteService = new google.maps.places.AutocompleteService();
   const sessionToken = useMemo(
     () => new google.maps.places.AutocompleteSessionToken(),
@@ -18,6 +28,17 @@ const SearchBox: FunctionComponent<SearchBoxProps> = ({ onPlaceSelected }) => {
   const [searchResult, setSearchResult] = useState<
     Array<{ id: string | undefined; name: string; address: string }>
   >([]);
+  const [isInputFocused, setIsInputFocused] = useState(false);
+
+  useEffect(() => {
+    if (!locationLoading) {
+      setIsInputFocused(false);
+    }
+  }, [locationLoading]);
+
+  useEffect(() => {
+    setSearchText(locationText);
+  }, [locationText]);
 
   const handlePredictions = (
     predictions: google.maps.places.AutocompletePrediction[] | null,
@@ -48,6 +69,7 @@ const SearchBox: FunctionComponent<SearchBoxProps> = ({ onPlaceSelected }) => {
             type="text"
             placeholder="Enter your address"
             value={searchText}
+            onClick={() => setIsInputFocused(true)}
             onChange={(e: any) => {
               const { value } = e.target;
               setSearchText(value);
@@ -64,30 +86,57 @@ const SearchBox: FunctionComponent<SearchBoxProps> = ({ onPlaceSelected }) => {
             }}
           />
         </div>
-        {searchResult.length > 0 && (
+        {(searchResult.length > 0 || isInputFocused) && (
           <ul
             className="absolute top-0 left-0 w-full rounded-xl overflow-hidden bg-white transition"
             style={{ paddingTop: 50, top: 26 }}
           >
-            {searchResult?.map(({ id, name, address }) => (
-              <li
-                key={id}
-                className="flex items-center p-3 px-5 gap-4 hover:bg-neutral-300 cursor-pointer"
-                onClick={() => {
-                  onPlaceSelected(id || "");
-                  setSearchResult([]);
-                  setSearchText(name);
-                }}
-              >
-                <div className="p-2 rounded-full bg-neutral-100">
-                  <HiBuildingOffice2 size={20} />
-                </div>
-                <div className="flex flex-col">
-                  <p>{name}</p>
-                  <p className="text-sm">{address}</p>
-                </div>
-              </li>
-            ))}
+            {searchResult.length > 0 ? (
+              <>
+                {searchResult?.map(({ id, name, address }) => (
+                  <li
+                    key={id}
+                    className="flex items-center p-3 px-5 gap-4 hover:bg-neutral-300 cursor-pointer"
+                    onClick={() => {
+                      onPlaceSelected(id || "");
+                      setSearchResult([]);
+                      //   setSearchText(name);
+                      setIsInputFocused(false);
+                    }}
+                  >
+                    <div className="p-2 rounded-full bg-neutral-100">
+                      <HiBuildingOffice2 size={20} />
+                    </div>
+                    <div className="flex flex-col">
+                      <p>{name}</p>
+                      <p className="text-sm">{address}</p>
+                    </div>
+                  </li>
+                ))}
+              </>
+            ) : (
+              <>
+                {isInputFocused && (
+                  <>
+                    {locationLoading ? (
+                      <li className="flex items-center justify-center p-3">
+                        <Loader />
+                      </li>
+                    ) : (
+                      <li
+                        className="flex items-center p-3 px-5 gap-4 hover:bg-neutral-300 cursor-pointer"
+                        onClick={onUserLocationSelected}
+                      >
+                        <div className="p-3 rounded-full text-neutral-500 bg-neutral-100">
+                          <FaLocationArrow size={15} />
+                        </div>
+                        <p>Use my current location</p>
+                      </li>
+                    )}
+                  </>
+                )}
+              </>
+            )}
           </ul>
         )}
       </div>
