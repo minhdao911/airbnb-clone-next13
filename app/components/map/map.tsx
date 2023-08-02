@@ -12,7 +12,7 @@ const Map: FunctionComponent<MapProps> = ({ location, setValue }) => {
   const marker = useRef<google.maps.marker.AdvancedMarkerElement>();
   const mapObject = useRef<google.maps.Map>();
 
-  const [locationText, setLocationText] = useState(location.address);
+  const [locationText, setLocationText] = useState(location?.address || "");
   const [locationLoading, setLocationLoading] = useState(false);
 
   useEffect(() => {

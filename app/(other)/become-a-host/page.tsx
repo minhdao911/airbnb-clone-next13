@@ -1,12 +1,13 @@
 "use client";
 
-import React, { FunctionComponent, useState } from "react";
+import React, { FunctionComponent, useCallback, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import Button from "@/app/components/button";
 import Heading from "@/app/components/heading";
 import CategoryStep from "@/app/components/listing-steps/category";
 import { FaAirbnb } from "react-icons/fa";
 import LocationStep from "@/app/components/listing-steps/location";
+import InfoStep from "@/app/components/listing-steps/info";
 
 enum STEPS {
   CATEGORY = 0,
@@ -38,7 +39,8 @@ const BecomeAHost: FunctionComponent<BecomeAHostProps> = () => {
       category: "",
       location: null,
       guestCount: 1,
-      roomCount: 1,
+      bedroomCount: 1,
+      bedCount: 1,
       bathroomCount: 1,
       imageSrc: "",
       price: 1,
@@ -48,6 +50,12 @@ const BecomeAHost: FunctionComponent<BecomeAHostProps> = () => {
   });
 
   const category = watch("category");
+  const location = watch("location");
+  const guestCount = watch("guestCount");
+  const bedroomCount = watch("bedroomCount");
+  const bedCount = watch("bedCount");
+  const bathroomCount = watch("bathroomCount");
+
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
       shouldValidate: true,
@@ -58,12 +66,19 @@ const BecomeAHost: FunctionComponent<BecomeAHostProps> = () => {
 
   const onBack = () => {
     setStep((value) => (value - 1 < 0 ? 0 : value - 1));
+    setNextStepDisabled(false);
   };
 
-  const onNext = () => {
+  const onNext = useCallback(() => {
+    switch (step + 1) {
+      case STEPS.LOCATION:
+        if (location === null) setNextStepDisabled(true);
+        break;
+      default:
+        break;
+    }
     setStep((value) => value + 1);
-    setNextStepDisabled(true);
-  };
+  }, [step, location]);
 
   const bodyContent = () => {
     if (!started) {
@@ -137,6 +152,15 @@ const BecomeAHost: FunctionComponent<BecomeAHostProps> = () => {
           );
           break;
         }
+        case STEPS.INFO: {
+          Component = (
+            <InfoStep
+              guestCount={guestCount}
+              bedroomCount={bedroomCount}
+              bedCount={bedCount}
+              bathroomCount={bathroomCount}
+              setValue={(id, value) => {
+                setCustomValue(id, value);
                 setNextStepDisabled(false);
               }}
             />
