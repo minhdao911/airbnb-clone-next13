@@ -1,15 +1,18 @@
 import { FunctionComponent, useEffect, useRef, useState } from "react";
 import SearchBox from "./search-box";
 
+export type Location = { address: string; geometry: google.maps.LatLngLiteral };
+
 interface MapProps {
+  location: Location;
   setValue: (value: any) => void;
 }
 
-const Map: FunctionComponent<MapProps> = ({ setValue }) => {
+const Map: FunctionComponent<MapProps> = ({ location, setValue }) => {
   const marker = useRef<google.maps.marker.AdvancedMarkerElement>();
   const mapObject = useRef<google.maps.Map>();
 
-  const [locationText, setLocationText] = useState("");
+  const [locationText, setLocationText] = useState(location.address);
   const [locationLoading, setLocationLoading] = useState(false);
 
   useEffect(() => {
@@ -29,6 +32,15 @@ const Map: FunctionComponent<MapProps> = ({ setValue }) => {
     }
     initMap();
   }, []);
+
+  useEffect(() => {
+    async function addMarker() {
+      if (location && location.geometry.lat && location.geometry.lng) {
+        await createMarker(location.geometry);
+      }
+    }
+    addMarker();
+  }, [location]);
 
   const handlePlaceSelected = (placeId: string) => {
     if (mapObject.current) {
@@ -57,9 +69,11 @@ const Map: FunctionComponent<MapProps> = ({ setValue }) => {
   ) => {
     if (status === "OK" && results && results.length > 0) {
       const place = results[0];
-      await createMarker(place.geometry.location);
       setLocationText(place.formatted_address);
-      setValue(place.formatted_address);
+      setValue({
+        address: place.formatted_address,
+        geometry: place.geometry.location,
+      });
     } else {
       setLocationLoading(false);
     }

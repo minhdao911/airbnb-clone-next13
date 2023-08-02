@@ -128,8 +128,15 @@ const BecomeAHost: FunctionComponent<BecomeAHostProps> = () => {
         case STEPS.LOCATION: {
           Component = (
             <LocationStep
-              setValue={(coords) => {
-                setCustomValue("location", `${coords.lat}, ${coords.lng}`);
+              location={location}
+              setValue={(location) => {
+                setCustomValue("location", location);
+                setNextStepDisabled(false);
+              }}
+            />
+          );
+          break;
+        }
                 setNextStepDisabled(false);
               }}
             />

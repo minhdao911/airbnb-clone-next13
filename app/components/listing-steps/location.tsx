@@ -2,13 +2,17 @@
 
 import { FunctionComponent } from "react";
 import Heading from "../heading";
-import Map from "../map/map";
+import Map, { Location } from "../map/map";
 
 interface LocationStepProps {
+  location: Location;
   setValue: (value: any) => void;
 }
 
-const LocationStep: FunctionComponent<LocationStepProps> = ({ setValue }) => {
+const LocationStep: FunctionComponent<LocationStepProps> = ({
+  location,
+  setValue,
+}) => {
   return (
     <>
       <Heading
@@ -19,7 +23,7 @@ const LocationStep: FunctionComponent<LocationStepProps> = ({ setValue }) => {
           lineHeight: "2rem",
         }}
       />
-      <Map setValue={setValue} />
+      <Map location={location} setValue={setValue} />
     </>
   );
 };
