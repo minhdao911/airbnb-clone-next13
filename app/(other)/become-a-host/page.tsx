@@ -10,6 +10,7 @@ import LocationStep from "@/app/components/listing-steps/location";
 import InfoStep from "@/app/components/listing-steps/info";
 import ImagesStep from "@/app/components/listing-steps/images";
 import TitleStep from "@/app/components/listing-steps/title";
+import DescriptionStep from "@/app/components/listing-steps/description";
 
 enum STEPS {
   CATEGORY = 0,
@@ -58,6 +59,7 @@ const BecomeAHost: FunctionComponent<BecomeAHostProps> = () => {
   const bathroomCount = watch("bathroomCount");
   const images = watch("images");
   const title = watch("title");
+  const desc = watch("description");
 
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
@@ -197,6 +199,18 @@ const BecomeAHost: FunctionComponent<BecomeAHostProps> = () => {
               title={title}
               setValue={(value) => {
                 setCustomValue("title", value);
+                setNextStepDisabled(false);
+              }}
+            />
+          );
+          break;
+        }
+        case STEPS.DESCRIPTION: {
+          Component = (
+            <DescriptionStep
+              text={desc}
+              setValue={(value) => {
+                setCustomValue("description", value);
                 setNextStepDisabled(false);
               }}
             />
