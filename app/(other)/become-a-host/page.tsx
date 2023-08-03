@@ -12,6 +12,7 @@ import ImagesStep from "@/app/components/listing-steps/images";
 import TitleStep from "@/app/components/listing-steps/title";
 import DescriptionStep from "@/app/components/listing-steps/description";
 import PriceStep from "@/app/components/listing-steps/price";
+import FinalStep from "@/app/components/listing-steps/final";
 
 enum STEPS {
   CATEGORY = 0,
@@ -21,6 +22,7 @@ enum STEPS {
   TITLE = 4,
   DESCRIPTION = 5,
   PRICE = 6,
+  FINAL = 7,
 }
 
 interface BecomeAHostProps {}
@@ -231,6 +233,16 @@ const BecomeAHost: FunctionComponent<BecomeAHostProps> = () => {
           );
           break;
         }
+        case STEPS.FINAL: {
+          Component = (
+            <FinalStep
+              title={title}
+              price={price}
+              imageSrc={images[0].preview}
+            />
+          );
+          break;
+        }
         default:
           return null;
       }
@@ -248,7 +260,7 @@ const BecomeAHost: FunctionComponent<BecomeAHostProps> = () => {
             px-5
             m-auto
           "
-          style={{ maxHeight: "calc(100vh - 218px)", maxWidth: "40rem" }}
+          style={{ maxHeight: "calc(100vh - 218px)", maxWidth: "50rem" }}
         >
           {Component}
         </div>
