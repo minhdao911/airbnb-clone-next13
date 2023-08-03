@@ -1,3 +1,5 @@
+"use client";
+
 import { FunctionComponent } from "react";
 import Heading from "../heading";
 import Counter from "../inputs/counter";

@@ -8,6 +8,7 @@ import CategoryStep from "@/app/components/listing-steps/category";
 import { FaAirbnb } from "react-icons/fa";
 import LocationStep from "@/app/components/listing-steps/location";
 import InfoStep from "@/app/components/listing-steps/info";
+import ImagesStep from "@/app/components/listing-steps/images";
 
 enum STEPS {
   CATEGORY = 0,
@@ -17,8 +18,6 @@ enum STEPS {
   DESCRIPTION = 4,
   PRICE = 5,
 }
-
-const source = `https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_MAPS_API_KEY}&libraries=places`;
 
 interface BecomeAHostProps {}
 
@@ -42,7 +41,7 @@ const BecomeAHost: FunctionComponent<BecomeAHostProps> = () => {
       bedroomCount: 1,
       bedCount: 1,
       bathroomCount: 1,
-      imageSrc: "",
+      images: [],
       price: 1,
       title: "",
       description: "",
@@ -55,6 +54,7 @@ const BecomeAHost: FunctionComponent<BecomeAHostProps> = () => {
   const bedroomCount = watch("bedroomCount");
   const bedCount = watch("bedCount");
   const bathroomCount = watch("bathroomCount");
+  const images = watch("images");
 
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
@@ -71,14 +71,19 @@ const BecomeAHost: FunctionComponent<BecomeAHostProps> = () => {
 
   const onNext = useCallback(() => {
     switch (step + 1) {
-      case STEPS.LOCATION:
+      case STEPS.LOCATION: {
         if (location === null) setNextStepDisabled(true);
         break;
+      }
+      case STEPS.IMAGES: {
+        if (images.length < 3) setNextStepDisabled(true);
+        break;
+      }
       default:
         break;
     }
     setStep((value) => value + 1);
-  }, [step, location]);
+  }, [step, location, images]);
 
   const bodyContent = () => {
     if (!started) {
@@ -162,6 +167,22 @@ const BecomeAHost: FunctionComponent<BecomeAHostProps> = () => {
               setValue={(id, value) => {
                 setCustomValue(id, value);
                 setNextStepDisabled(false);
+              }}
+            />
+          );
+          break;
+        }
+        case STEPS.IMAGES: {
+          Component = (
+            <ImagesStep
+              files={images}
+              setValue={(sources) => {
+                setCustomValue("images", sources);
+                if (sources.length > 2) {
+                  setNextStepDisabled(false);
+                } else {
+                  setNextStepDisabled(true);
+                }
               }}
             />
           );

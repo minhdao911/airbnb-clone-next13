@@ -1,5 +1,8 @@
+"use client";
+
 import { FunctionComponent, useCallback } from "react";
 import { HiMinus, HiPlus } from "react-icons/hi";
+import IconButton from "../icon-button";
 
 interface CounterProps {
   value: number;
@@ -30,19 +33,9 @@ const Counter: FunctionComponent<CounterProps> = ({
         {subtitle && <p>{subtitle}</p>}
       </div>
       <div className="flex items-center gap-4">
-        <button
-          className="flex items-center justify-center w-[35px] h-[35px] border border-neutral-400 rounded-full hover:border-black"
-          onClick={onReduce}
-        >
-          <HiMinus size={15} />
-        </button>
+        <IconButton type="outline" icon={HiMinus} onClick={onReduce} />
         <p>{value}</p>
-        <button
-          className="flex items-center justify-center w-[35px] h-[35px] border border-neutral-400 rounded-full hover:border-black"
-          onClick={onAdd}
-        >
-          <HiPlus size={15} />
-        </button>
+        <IconButton type="outline" icon={HiPlus} onClick={onAdd} />
       </div>
     </div>
   );
