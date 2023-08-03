@@ -11,6 +11,7 @@ import InfoStep from "@/app/components/listing-steps/info";
 import ImagesStep from "@/app/components/listing-steps/images";
 import TitleStep from "@/app/components/listing-steps/title";
 import DescriptionStep from "@/app/components/listing-steps/description";
+import PriceStep from "@/app/components/listing-steps/price";
 
 enum STEPS {
   CATEGORY = 0,
@@ -60,6 +61,7 @@ const BecomeAHost: FunctionComponent<BecomeAHostProps> = () => {
   const images = watch("images");
   const title = watch("title");
   const desc = watch("description");
+  const price = watch("price");
 
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
@@ -211,6 +213,18 @@ const BecomeAHost: FunctionComponent<BecomeAHostProps> = () => {
               text={desc}
               setValue={(value) => {
                 setCustomValue("description", value);
+                setNextStepDisabled(false);
+              }}
+            />
+          );
+          break;
+        }
+        case STEPS.PRICE: {
+          Component = (
+            <PriceStep
+              price={price}
+              setValue={(value) => {
+                setCustomValue("price", value);
                 setNextStepDisabled(false);
               }}
             />
