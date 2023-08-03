@@ -9,14 +9,16 @@ import { FaAirbnb } from "react-icons/fa";
 import LocationStep from "@/app/components/listing-steps/location";
 import InfoStep from "@/app/components/listing-steps/info";
 import ImagesStep from "@/app/components/listing-steps/images";
+import TitleStep from "@/app/components/listing-steps/title";
 
 enum STEPS {
   CATEGORY = 0,
   LOCATION = 1,
   INFO = 2,
   IMAGES = 3,
-  DESCRIPTION = 4,
-  PRICE = 5,
+  TITLE = 4,
+  DESCRIPTION = 5,
+  PRICE = 6,
 }
 
 interface BecomeAHostProps {}
@@ -55,6 +57,7 @@ const BecomeAHost: FunctionComponent<BecomeAHostProps> = () => {
   const bedCount = watch("bedCount");
   const bathroomCount = watch("bathroomCount");
   const images = watch("images");
+  const title = watch("title");
 
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
@@ -183,6 +186,18 @@ const BecomeAHost: FunctionComponent<BecomeAHostProps> = () => {
                 } else {
                   setNextStepDisabled(true);
                 }
+              }}
+            />
+          );
+          break;
+        }
+        case STEPS.TITLE: {
+          Component = (
+            <TitleStep
+              title={title}
+              setValue={(value) => {
+                setCustomValue("title", value);
+                setNextStepDisabled(false);
               }}
             />
           );
