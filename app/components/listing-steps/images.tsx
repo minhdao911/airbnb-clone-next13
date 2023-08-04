@@ -8,7 +8,7 @@ import IconButton from "../icon-button";
 import { HiMinus } from "react-icons/hi";
 import { useDropzone } from "react-dropzone";
 
-type UploadedFile = File & { preview: string };
+export type UploadedFile = File & { preview: string };
 
 interface ImagesStepProps {
   files: UploadedFile[];

@@ -3,15 +3,20 @@
 import { FunctionComponent } from "react";
 import Heading from "../heading";
 import TextArea from "../inputs/textarea";
+import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 
 interface DescriptionStepProps {
   text: string;
-  setValue: (value: any) => void;
+  errors: FieldErrors;
+  register: UseFormRegister<FieldValues>;
+  onChange: () => void;
 }
 
 const DescriptionStep: FunctionComponent<DescriptionStepProps> = ({
   text,
-  setValue,
+  errors,
+  register,
+  onChange,
 }) => {
   return (
     <div className="w-full h-screen flex flex-col justify-center gap-8">
@@ -25,10 +30,14 @@ const DescriptionStep: FunctionComponent<DescriptionStepProps> = ({
       />
       <div>
         <TextArea
+          id="description"
           value={text}
           wordLimit={500}
           rows={7}
-          onChange={(value) => setValue(value)}
+          errors={errors}
+          register={register}
+          onChange={onChange}
+          required
         />
       </div>
     </div>

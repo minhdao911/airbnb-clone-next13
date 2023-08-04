@@ -1,18 +1,29 @@
 "use client";
 
-import React, { FunctionComponent, useCallback, useState } from "react";
-import { FieldValues, useForm } from "react-hook-form";
+import React, {
+  FunctionComponent,
+  useCallback,
+  useMemo,
+  useState,
+} from "react";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import Button from "@/app/components/button";
 import Heading from "@/app/components/heading";
 import CategoryStep from "@/app/components/listing-steps/category";
 import { FaAirbnb } from "react-icons/fa";
 import LocationStep from "@/app/components/listing-steps/location";
 import InfoStep from "@/app/components/listing-steps/info";
-import ImagesStep from "@/app/components/listing-steps/images";
+import ImagesStep, {
+  UploadedFile,
+} from "@/app/components/listing-steps/images";
 import TitleStep from "@/app/components/listing-steps/title";
 import DescriptionStep from "@/app/components/listing-steps/description";
 import PriceStep from "@/app/components/listing-steps/price";
 import FinalStep from "@/app/components/listing-steps/final";
+import axios from "axios";
+import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import Loader from "@/app/components/loader";
 
 enum STEPS {
   CATEGORY = 0,
@@ -25,12 +36,24 @@ enum STEPS {
   FINAL = 7,
 }
 
+type ImageData = {
+  asset_id: string;
+  url: string;
+  width: number;
+  height: number;
+};
+
 interface BecomeAHostProps {}
 
+const cloudinaryUrl = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`;
+
 const BecomeAHost: FunctionComponent<BecomeAHostProps> = () => {
+  const router = useRouter();
+
   const [step, setStep] = useState(STEPS.CATEGORY);
   const [started, setStarted] = useState(false);
   const [nextStepDisabled, setNextStepDisabled] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -38,7 +61,6 @@ const BecomeAHost: FunctionComponent<BecomeAHostProps> = () => {
     setValue,
     watch,
     formState: { errors },
-    reset,
   } = useForm<FieldValues>({
     defaultValues: {
       category: "",
@@ -85,7 +107,7 @@ const BecomeAHost: FunctionComponent<BecomeAHostProps> = () => {
         break;
       }
       case STEPS.IMAGES: {
-        if (images.length < 3) setNextStepDisabled(true);
+        if (images.length < 2) setNextStepDisabled(true);
         break;
       }
       default:
@@ -93,6 +115,70 @@ const BecomeAHost: FunctionComponent<BecomeAHostProps> = () => {
     }
     setStep((value) => value + 1);
   }, [step, location, images]);
+
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    if (step !== STEPS.FINAL) {
+      return onNext();
+    }
+
+    setIsLoading(true);
+
+    const imagesData = await uploadImages(images);
+    if (!imagesData) return;
+
+    axios
+      .post("/api/listings", {
+        ...data,
+        images: imagesData,
+      })
+      .then(() => {
+        toast.success("Listing created!");
+        router.push("/home");
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("Error while creating listing");
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
+  const uploadImages = async (files: UploadedFile[]) => {
+    const formData = new FormData();
+    const imagesData: ImageData[] = [];
+    const requests = files.map((file) => {
+      formData.append("file", file);
+      formData.append(
+        "upload_preset",
+        process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_NAME as string
+      );
+      return axios.post(cloudinaryUrl, formData);
+    });
+    try {
+      const responses = await Promise.all(requests);
+      responses.forEach(({ data }) => {
+        imagesData.push({
+          asset_id: data.asset_id,
+          url: data.secure_url,
+          width: data.width,
+          height: data.height,
+        });
+      });
+      return imagesData;
+    } catch (error) {
+      console.log(error);
+      toast.error("Error while uploading images");
+    }
+  };
+
+  const actionLabel = useMemo(() => {
+    if (step === STEPS.FINAL) {
+      if (isLoading) return "";
+      return "Submit";
+    }
+    return "Next";
+  }, [step, isLoading]);
 
   const bodyContent = () => {
     if (!started) {
@@ -187,7 +273,7 @@ const BecomeAHost: FunctionComponent<BecomeAHostProps> = () => {
               files={images}
               setValue={(sources) => {
                 setCustomValue("images", sources);
-                if (sources.length > 2) {
+                if (sources.length > 1) {
                   setNextStepDisabled(false);
                 } else {
                   setNextStepDisabled(true);
@@ -201,8 +287,9 @@ const BecomeAHost: FunctionComponent<BecomeAHostProps> = () => {
           Component = (
             <TitleStep
               title={title}
-              setValue={(value) => {
-                setCustomValue("title", value);
+              errors={errors}
+              register={register}
+              onChange={() => {
                 setNextStepDisabled(false);
               }}
             />
@@ -213,8 +300,9 @@ const BecomeAHost: FunctionComponent<BecomeAHostProps> = () => {
           Component = (
             <DescriptionStep
               text={desc}
-              setValue={(value) => {
-                setCustomValue("description", value);
+              errors={errors}
+              register={register}
+              onChange={() => {
                 setNextStepDisabled(false);
               }}
             />
@@ -277,13 +365,9 @@ const BecomeAHost: FunctionComponent<BecomeAHostProps> = () => {
         bg-white
       "
     >
-      <div className="flex justify-between p-8 px-10">
+      <div className="flex p-8 px-10">
         <FaAirbnb size={35} />
-        <div className="p-2 px-4 border rounded-full text-sm cursor-pointer hover:border-black transition">
-          Save & exit
-        </div>
       </div>
-      {/* <div className="flex-1 m-auto">{bodyContent()}</div> */}
       {bodyContent()}
       <div className="absolute bottom-0 left-0 w-full p-5 px-10 border-t-4 bg-white">
         {started ? (
@@ -304,11 +388,12 @@ const BecomeAHost: FunctionComponent<BecomeAHostProps> = () => {
               }}
             />
             <Button
-              type="secondary"
-              label="Next"
+              type={step === STEPS.FINAL ? "primary" : "secondary"}
+              label={actionLabel}
+              iconComp={isLoading && <Loader />}
               width="fit"
-              disabled={nextStepDisabled}
-              onClick={onNext}
+              disabled={nextStepDisabled || isLoading}
+              onClick={handleSubmit(onSubmit)}
             />
           </div>
         ) : (

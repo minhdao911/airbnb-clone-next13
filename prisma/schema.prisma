@@ -49,14 +49,14 @@ model Listing {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   title String
   description String
-  imageSources String[]
+  images Json
   createdAt DateTime @default(now())
   category String
   bedroomCount Int
   bedCount Int
   bathroomCount Int
   guestCount Int
-  locationValue String
+  location Json
   userId String @db.ObjectId
   price Int
 

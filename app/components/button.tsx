@@ -1,25 +1,27 @@
 "use client";
 
-import { FunctionComponent } from "react";
+import React, { FunctionComponent } from "react";
 import { IconType } from "react-icons";
 
 interface ButtonProps {
-  label: string;
+  label?: string;
   disabled?: boolean;
   type?: "primary" | "secondary" | "outline" | "ghost";
   small?: boolean;
   width?: number | string;
   icon?: IconType;
+  iconComp?: React.ReactNode;
   onClick?: () => void;
 }
 
 const Button: FunctionComponent<ButtonProps> = ({
-  label,
+  label = "",
   disabled,
   type = "primary",
   small,
   width = "full",
   icon: Icon,
+  iconComp,
   onClick,
 }: ButtonProps) => {
   const styles = {
@@ -42,6 +44,7 @@ const Button: FunctionComponent<ButtonProps> = ({
       onClick={onClick}
     >
       {Icon && <Icon size={20} className="absolute left-4 top-3" />}
+      {iconComp}
       {label}
     </button>
   );
