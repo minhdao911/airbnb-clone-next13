@@ -3,13 +3,21 @@
 import { FunctionComponent } from "react";
 import Heading from "../heading";
 import TextArea from "../inputs/textarea";
+import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 
 interface TitleStepProps {
   title: string;
-  setValue: (value: any) => void;
+  errors: FieldErrors;
+  register: UseFormRegister<FieldValues>;
+  onChange: () => void;
 }
 
-const TitleStep: FunctionComponent<TitleStepProps> = ({ title, setValue }) => {
+const TitleStep: FunctionComponent<TitleStepProps> = ({
+  title,
+  errors,
+  register,
+  onChange,
+}) => {
   return (
     <div className="w-full h-screen flex flex-col justify-center gap-8">
       <Heading
@@ -22,9 +30,13 @@ const TitleStep: FunctionComponent<TitleStepProps> = ({ title, setValue }) => {
       />
       <div>
         <TextArea
+          id="title"
           value={title}
           wordLimit={32}
-          onChange={(value) => setValue(value)}
+          errors={errors}
+          register={register}
+          onChange={onChange}
+          required
         />
       </div>
     </div>
