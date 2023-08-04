@@ -100,7 +100,6 @@ const SearchBox: FunctionComponent<SearchBoxProps> = ({
                     onClick={() => {
                       onPlaceSelected(id || "");
                       setSearchResult([]);
-                      //   setSearchText(name);
                       setIsInputFocused(false);
                     }}
                   >

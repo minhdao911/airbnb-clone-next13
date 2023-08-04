@@ -1,7 +1,11 @@
 import { FunctionComponent, useEffect, useRef, useState } from "react";
 import SearchBox from "./search-box";
 
-export type Location = { address: string; geometry: google.maps.LatLngLiteral };
+export type Location = {
+  address: string;
+  shortAddress: string;
+  geometry: google.maps.LatLngLiteral;
+};
 
 interface MapProps {
   location: Location;
@@ -44,8 +48,7 @@ const Map: FunctionComponent<MapProps> = ({ location, setValue }) => {
 
   const handlePlaceSelected = (placeId: string) => {
     if (mapObject.current) {
-      const geocoder = new google.maps.Geocoder();
-      geocoder.geocode({ placeId }, handleGeocoderResponse);
+      getPlaceDetails(placeId);
     }
   };
 
@@ -63,19 +66,57 @@ const Map: FunctionComponent<MapProps> = ({ location, setValue }) => {
     }
   };
 
-  const handleGeocoderResponse = async (
+  const handleGeocoderResponse = (
     results: google.maps.GeocoderResult[] | null,
     status: google.maps.GeocoderStatus
   ) => {
     if (status === "OK" && results && results.length > 0) {
       const place = results[0];
-      setLocationText(place.formatted_address);
-      setValue({
-        address: place.formatted_address,
-        geometry: place.geometry.location,
-      });
+      getPlaceDetails(place.place_id);
     } else {
       setLocationLoading(false);
+    }
+  };
+
+  const getPlaceDetails = (placeId: string) => {
+    if (mapObject.current) {
+      const request = {
+        placeId,
+        fields: ["geometry", "address_components", "formatted_address"],
+      };
+      const placesService = new google.maps.places.PlacesService(
+        mapObject.current
+      );
+      placesService.getDetails(request, (place, status) => {
+        if (status === "OK" && place) {
+          const location = {
+            address: place.formatted_address,
+            shortAddress: extractAddressFromAddressComponents(
+              place.address_components
+            ),
+            geometry: {
+              lat: place.geometry?.location?.lat(),
+              lng: place.geometry?.location?.lng(),
+            },
+          };
+          setLocationText(place.formatted_address as string);
+          setValue(location);
+        }
+      });
+    }
+  };
+
+  const extractAddressFromAddressComponents = (
+    addressComponents: google.maps.GeocoderAddressComponent[] | undefined
+  ) => {
+    if (addressComponents !== undefined) {
+      const locality = addressComponents.find((comp) =>
+        comp.types.includes("locality")
+      );
+      const country = addressComponents.find((comp) =>
+        comp.types.includes("country")
+      );
+      return `${locality?.long_name}, ${country?.long_name}`;
     }
   };
 
