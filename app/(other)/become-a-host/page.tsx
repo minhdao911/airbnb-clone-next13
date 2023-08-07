@@ -24,6 +24,7 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import Loader from "@/app/components/loader";
+import { ImageData } from "@/app/types";
 
 enum STEPS {
   CATEGORY = 0,
@@ -35,13 +36,6 @@ enum STEPS {
   PRICE = 6,
   FINAL = 7,
 }
-
-type ImageData = {
-  asset_id: string;
-  url: string;
-  width: number;
-  height: number;
-};
 
 interface BecomeAHostProps {}
 

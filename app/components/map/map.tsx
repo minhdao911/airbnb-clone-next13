@@ -1,14 +1,9 @@
 import { FunctionComponent, useEffect, useRef, useState } from "react";
 import SearchBox from "./search-box";
-
-export type Location = {
-  address: string;
-  shortAddress: string;
-  geometry: google.maps.LatLngLiteral;
-};
+import { LocationData } from "@/app/types";
 
 interface MapProps {
-  location: Location;
+  location: LocationData;
   setValue: (value: any) => void;
 }
 
