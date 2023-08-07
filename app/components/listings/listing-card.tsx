@@ -3,13 +3,15 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-import { SafeListing } from "@/app/types";
+import { SafeListing, SafeUser } from "@/app/types";
+import HeartButton from "../heart-button";
 
 interface ListingCardProps {
   data: SafeListing;
+  currentUser?: SafeUser | null;
 }
 
-const ListingCard: React.FC<ListingCardProps> = ({ data }) => {
+const ListingCard: React.FC<ListingCardProps> = ({ data, currentUser }) => {
   const router = useRouter();
 
   return (
@@ -39,6 +41,15 @@ const ListingCard: React.FC<ListingCardProps> = ({ data }) => {
             src={data.images[0].url}
             alt="Listing"
           />
+          <div
+            className="
+            absolute
+            top-3
+            right-3
+          "
+          >
+            <HeartButton listingId={data.id} currentUser={currentUser} />
+          </div>
         </div>
         <div>
           <div className="font-medium">{data.location.shortAddress}</div>

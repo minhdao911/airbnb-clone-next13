@@ -2,9 +2,11 @@ import ClientOnly from "../components/client-only";
 import Container from "../components/container";
 import ListingCard from "../components/listings/listing-card";
 import getListings from "../actions/getListings";
+import getCurrentUser from "../actions/getCurrentUser";
 
 export default async function Home() {
   const listings = await getListings();
+  const currentUser = await getCurrentUser();
 
   return (
     <ClientOnly>
@@ -23,7 +25,11 @@ export default async function Home() {
           "
         >
           {listings.map((listing: any) => (
-            <ListingCard key={listing.id} data={listing} />
+            <ListingCard
+              key={listing.id}
+              data={listing}
+              currentUser={currentUser}
+            />
           ))}
         </div>
       </Container>
