@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 
 import { SafeListing, SafeUser } from "@/app/types";
 import HeartButton from "../heart-button";
+import Carousel from "../carousel";
 
 interface ListingCardProps {
   data: SafeListing;
@@ -29,18 +30,23 @@ const ListingCard: React.FC<ListingCardProps> = ({ data, currentUser }) => {
             rounded-xl
           "
         >
-          <Image
-            fill
-            className="
-              object-cover 
-              h-full 
-              w-full 
-              group-hover:scale-110 
-              transition
-            "
-            src={data.images[0].url}
-            alt="Listing"
-          />
+          <Carousel>
+            {data.images.map(({ asset_id, url }) => (
+              <Image
+                key={asset_id}
+                width={500}
+                height={500}
+                className="
+                  h-full
+                  w-full
+                  object-cover
+                  transition
+                "
+                src={url}
+                alt="Listing"
+              />
+            ))}
+          </Carousel>
           <div
             className="
             absolute

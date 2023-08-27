@@ -360,7 +360,11 @@ const BecomeAHost: FunctionComponent<BecomeAHostProps> = () => {
       "
     >
       <div className="flex p-8 px-10">
-        <FaAirbnb size={35} />
+        <FaAirbnb
+          size={35}
+          className="cursor-pointer"
+          onClick={() => router.push("/home")}
+        />
       </div>
       {bodyContent()}
       <div className="absolute bottom-0 left-0 w-full p-5 px-10 border-t-4 bg-white">
