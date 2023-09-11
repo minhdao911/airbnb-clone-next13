@@ -10,9 +10,14 @@ import Carousel from "../carousel";
 interface ListingCardProps {
   data: SafeListing;
   currentUser?: SafeUser | null;
+  withFavorite?: boolean;
 }
 
-const ListingCard: React.FC<ListingCardProps> = ({ data, currentUser }) => {
+const ListingCard: React.FC<ListingCardProps> = ({
+  data,
+  currentUser,
+  withFavorite = true,
+}) => {
   const router = useRouter();
 
   return (
@@ -47,15 +52,17 @@ const ListingCard: React.FC<ListingCardProps> = ({ data, currentUser }) => {
               />
             ))}
           </Carousel>
-          <div
-            className="
+          {withFavorite && (
+            <div
+              className="
             absolute
             top-3
             right-3
           "
-          >
-            <HeartButton listingId={data.id} currentUser={currentUser} />
-          </div>
+            >
+              <HeartButton listingId={data.id} currentUser={currentUser} />
+            </div>
+          )}
         </div>
         <div>
           <div className="font-medium">{data.location.shortAddress}</div>

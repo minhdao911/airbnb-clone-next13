@@ -1,5 +1,6 @@
 import getCurrentUser from "@/app/actions/getCurrentUser";
 import prisma from "@/app/libs/prismadb";
+import { SafeUser } from "@/app/types";
 import { NextResponse } from "next/server";
 
 interface IParams {
@@ -7,7 +8,7 @@ interface IParams {
 }
 
 export async function POST(_: Request, { params }: { params: IParams }) {
-  const currentUser = await getCurrentUser();
+  const currentUser = (await getCurrentUser()) as SafeUser | null;
 
   if (!currentUser) {
     return NextResponse.error();
@@ -35,7 +36,7 @@ export async function POST(_: Request, { params }: { params: IParams }) {
 }
 
 export async function DELETE(_: Request, { params }: { params: IParams }) {
-  const currentUser = await getCurrentUser();
+  const currentUser = (await getCurrentUser()) as SafeUser | null;
 
   if (!currentUser) {
     return NextResponse.error();
@@ -48,7 +49,7 @@ export async function DELETE(_: Request, { params }: { params: IParams }) {
   }
 
   let favoriteIds = [...(currentUser.favoriteIds || [])];
-  favoriteIds.filter((id) => id !== listingId);
+  favoriteIds = favoriteIds.filter((id) => id !== listingId);
 
   const user = await prisma.user.update({
     where: { id: currentUser.id },

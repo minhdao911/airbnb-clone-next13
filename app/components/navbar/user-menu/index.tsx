@@ -57,7 +57,12 @@ const UserMenu = ({ currentUser }: UserMenuProps) => {
               <MenuItem highlighted text="Trips" onClick={() => {}} />
               <MenuItem highlighted text="Wishlists" onClick={() => {}} />
               <hr className="my-2" />
-              <MenuItem text="Airbnb your home" onClick={onRent} />
+              <MenuItem
+                text="Manage listings"
+                onClick={() => {
+                  router.push("hosting");
+                }}
+              />
               <MenuItem text="Log out" onClick={() => signOut()} />
             </>
           ) : (
