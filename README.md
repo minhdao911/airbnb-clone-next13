@@ -7,8 +7,8 @@ With following features:
 - Image upload with Cloundinary CDN ✔️
 - Map component with Google Maps API (Maps, Places, Geocoder) ✔️
 - Listings creation ✔️
-- Listings deletion
-- Booking / Reservation system
+- Listings deletion ✔️
+- Booking / Reservation system ✔️
 - Favorites system ✔️
 - Advanced search algorithm (filtering feature)
 - Shareable URL filters
