@@ -6,7 +6,7 @@ interface ContainerProps {
 
 const Container = ({ children }: ContainerProps) => {
   return (
-    <div className="max-w-[2520px] mx-auto xl:px-20 md:px-10 px-4">
+    <div className="max-w-[1440px] mx-auto xl:px-20 md:px-10 px-4">
       {children}
     </div>
   );

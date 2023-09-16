@@ -28,7 +28,7 @@ export type SafeListing = Omit<Listing, "createdAt" | "images" | "location"> & {
   images: ImageData[];
 };
 
-export type SafeReservation = Omit<
+export type SafeSimpleReservation = Omit<
   Reservation,
   "createdAt" | "startDate" | "endDate" | "listing"
 > & {
@@ -37,8 +37,9 @@ export type SafeReservation = Omit<
   endDate: string;
 };
 
-export type SafeReservationWithListing = SafeReservation & {
+export type SafeReservation = SafeSimpleReservation & {
   listing: SafeListing;
+  user: SafeUser;
 };
 
 export function transformLocation(location: Prisma.JsonValue): LocationData {

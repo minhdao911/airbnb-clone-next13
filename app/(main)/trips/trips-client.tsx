@@ -3,13 +3,14 @@
 import Container from "@/app/components/container";
 import ListingCard from "@/app/components/listings/listing-card";
 import { SafeReservation, SafeUser } from "@/app/types";
-import { FunctionComponent, useCallback, useState } from "react";
+import { FunctionComponent, useCallback, useMemo, useState } from "react";
 import Button from "@/app/components/button";
 import { useRouter } from "next/navigation";
 import { MdOutlineWavingHand } from "react-icons/md";
 import Image from "next/image";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import { format, isFuture, isPast } from "date-fns";
 
 interface TripsClientProps {
   reservations: SafeReservation[] | null;
@@ -23,6 +24,21 @@ const TripsClient: FunctionComponent<TripsClientProps> = ({
   const router = useRouter();
 
   const [isLoading, setIsLoading] = useState(false);
+
+  const upcomingTrips = useMemo(() => {
+    return reservations
+      ? reservations.filter((reservation) =>
+          isFuture(new Date(reservation.endDate))
+        )
+      : [];
+  }, [reservations]);
+  const previousTrips = useMemo(() => {
+    return reservations
+      ? reservations.filter((reservation) =>
+          isPast(new Date(reservation.endDate))
+        )
+      : [];
+  }, [reservations]);
 
   const onCancelReservation = useCallback(
     (id: string) => {
@@ -51,7 +67,7 @@ const TripsClient: FunctionComponent<TripsClientProps> = ({
   return (
     <Container>
       <h1 className="text-3xl">Trips</h1>
-      {reservations && reservations.length > 0 ? (
+      {upcomingTrips.length > 0 ? (
         <div
           className="
               pt-5
@@ -63,7 +79,7 @@ const TripsClient: FunctionComponent<TripsClientProps> = ({
               gap-8
             "
         >
-          {reservations.map((reservation: any) => (
+          {upcomingTrips.map((reservation: any) => (
             <ListingCard
               key={reservation.id}
               data={reservation.listing}
@@ -99,8 +115,72 @@ const TripsClient: FunctionComponent<TripsClientProps> = ({
           />
         </div>
       )}
+      {previousTrips.length > 0 && (
+        <>
+          <h2 className="text-xl mt-10">Where you&apos;ve been</h2>
+          <div
+            className="
+              mt-5
+              grid 
+              grid-cols-1 
+              md:grid-cols-2 
+              lg:grid-cols-3
+              gap-7
+            "
+          >
+            {previousTrips.map((trip) => (
+              <PastTripCard
+                key={trip.id}
+                imgSrc={trip.listing.images[0].url}
+                location={trip.listing.location.shortAddress}
+                host={trip.user.name || ""}
+                startDate={new Date(trip.startDate)}
+                endDate={new Date(trip.endDate)}
+                onClick={() => router.push(`/listings/${trip.listingId}`)}
+              />
+            ))}
+          </div>
+        </>
+      )}
     </Container>
   );
 };
 
 export default TripsClient;
+
+interface PastTripCardProps {
+  imgSrc: string;
+  location: string;
+  host: string;
+  startDate: Date;
+  endDate: Date;
+  onClick: () => void;
+}
+
+const PastTripCard = ({
+  imgSrc,
+  location,
+  host,
+  startDate,
+  endDate,
+  onClick,
+}: PastTripCardProps) => {
+  return (
+    <div className="flex items-center gap-4 cursor-pointer" onClick={onClick}>
+      <Image
+        className="w-[80px] h-[80px] rounded object-cover"
+        src={imgSrc}
+        alt="listing image"
+        width={100}
+        height={100}
+      />
+      <div className="flex flex-col gap-1">
+        <p className="font-semibold">{location}</p>
+        <p className="text-sm text-gray-500 font-light">Hosted by {host}</p>
+        <p className="text-sm text-gray-500 font-light">
+          {format(startDate, "PP")} - {format(endDate, "PP")}
+        </p>
+      </div>
+    </div>
+  );
+};

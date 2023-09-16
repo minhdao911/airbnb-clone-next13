@@ -6,7 +6,7 @@ import ListingInfo from "@/app/components/listings/listing-info";
 import ListingReservation from "@/app/components/listings/listing-reservation";
 import Map from "@/app/components/map/map";
 import useAuthModal from "@/app/hooks/use-auth-modal";
-import { SafeListing, SafeReservation, SafeUser } from "@/app/types";
+import { SafeListing, SafeSimpleReservation, SafeUser } from "@/app/types";
 import { SERVICE_FEE } from "@/constants";
 import axios from "axios";
 import { eachDayOfInterval } from "date-fns";
@@ -19,7 +19,7 @@ interface ListingClientProps {
   listing: SafeListing & {
     user: SafeUser;
   };
-  reservations: SafeReservation[] | null;
+  reservations: SafeSimpleReservation[] | null;
   currentUser: SafeUser | null;
 }
 
