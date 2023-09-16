@@ -9,6 +9,7 @@ import useAuthModal from "@/app/hooks/use-auth-modal";
 import { SafeListing, SafeUser } from "@/app/types";
 import { SERVICE_FEE } from "@/constants";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import { FunctionComponent, useCallback, useState } from "react";
 import { RangeKeyDict } from "react-date-range";
 import toast from "react-hot-toast";
@@ -25,6 +26,7 @@ const ListingClient: FunctionComponent<ListingClientProps> = ({
   currentUser,
 }) => {
   const authModal = useAuthModal();
+  const router = useRouter();
 
   const today = new Date();
   const tomorrow = new Date(today);
@@ -67,15 +69,23 @@ const ListingClient: FunctionComponent<ListingClientProps> = ({
       })
       .then(() => {
         toast.success("Listing reserved!");
+        router.push("/trips");
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
         toast.error("Something went wrong");
       })
       .finally(() => {
         setIsLoading(false);
       });
-  }, [listing.id, startDate, endDate, totalPrice, currentUser, authModal]);
+  }, [
+    listing.id,
+    startDate,
+    endDate,
+    totalPrice,
+    currentUser,
+    authModal,
+    router,
+  ]);
 
   return (
     <Container>

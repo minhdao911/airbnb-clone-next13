@@ -3,26 +3,46 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-import { SafeListing, SafeUser } from "@/app/types";
+import { SafeListing, SafeReservation, SafeUser } from "@/app/types";
 import HeartButton from "../heart-button";
 import Carousel from "../carousel";
+import { useMemo } from "react";
+import { format } from "date-fns";
+import Button from "../button";
 
 interface ListingCardProps {
   data: SafeListing;
+  reservation?: SafeReservation;
   currentUser?: SafeUser | null;
   withFavorite?: boolean;
+  actionDisabled?: boolean;
+  onCancelReservation?: (id: string) => void;
 }
 
 const ListingCard: React.FC<ListingCardProps> = ({
   data,
+  reservation,
   currentUser,
   withFavorite = true,
+  actionDisabled,
+  onCancelReservation,
 }) => {
   const router = useRouter();
 
+  const reservationDate = useMemo(() => {
+    if (!reservation) {
+      return null;
+    }
+
+    const start = new Date(reservation.startDate);
+    const end = new Date(reservation.endDate);
+
+    return `${format(start, "PP")} - ${format(end, "PP")}`;
+  }, [reservation]);
+
   return (
     <div
-      onClick={() => router.push(`/listings/${data.id}`)}
+      onClick={() => !reservation && router.push(`/listings/${data.id}`)}
       className="col-span-1 cursor-pointer group"
     >
       <div className="flex flex-col gap-2 w-full">
@@ -35,23 +55,38 @@ const ListingCard: React.FC<ListingCardProps> = ({
             rounded-xl
           "
         >
-          <Carousel>
-            {data.images.map(({ asset_id, url }) => (
-              <Image
-                key={asset_id}
-                width={500}
-                height={500}
-                className="
+          {reservation ? (
+            <Image
+              width={500}
+              height={500}
+              className="
+              h-full
+              w-full
+              object-cover
+              transition
+            "
+              src={data.images[0].url}
+              alt="Listing"
+            />
+          ) : (
+            <Carousel>
+              {data.images.map(({ asset_id, url }) => (
+                <Image
+                  key={asset_id}
+                  width={500}
+                  height={500}
+                  className="
                   h-full
                   w-full
                   object-cover
                   transition
                 "
-                src={url}
-                alt="Listing"
-              />
-            ))}
-          </Carousel>
+                  src={url}
+                  alt="Listing"
+                />
+              ))}
+            </Carousel>
+          )}
           {withFavorite && (
             <div
               className="
@@ -63,16 +98,36 @@ const ListingCard: React.FC<ListingCardProps> = ({
               <HeartButton listingId={data.id} currentUser={currentUser} />
             </div>
           )}
+          {reservation && (
+            <div className="absolute-center hidden group-hover:flex flex-col gap-3 transition">
+              <Button
+                type="transparent"
+                label="View listing"
+                onClick={() => router.push(`/listings/${data.id}`)}
+              />
+              <Button
+                className="bg-rose-500/80 text-white hover:bg-rose-500"
+                type="transparent"
+                label="Cancel reservation"
+                disabled={actionDisabled}
+                onClick={() => {
+                  onCancelReservation && onCancelReservation(reservation.id);
+                }}
+              />
+            </div>
+          )}
         </div>
         <div>
           <div className="font-medium">{data.location.shortAddress}</div>
           <div className="font-light text-neutral-500 -mt-1">
-            {data.category}
+            {reservation ? reservationDate : data.category}
           </div>
         </div>
         <div className="flex flex-row items-center gap-1 -mt-1">
-          <div className="font-semibold">€{data.price}</div>
-          <div className="font-light">night</div>
+          <div className="font-semibold">
+            €{reservation ? reservation.totalPrice : data.price}
+          </div>
+          {!reservation && <div className="font-light">night</div>}
         </div>
       </div>
     </div>

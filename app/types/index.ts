@@ -1,4 +1,4 @@
-import { Listing, Prisma, User } from "@prisma/client";
+import { Listing, Prisma, Reservation, User } from "@prisma/client";
 
 export type ImageData = {
   asset_id: string;
@@ -26,6 +26,16 @@ export type SafeListing = Omit<Listing, "createdAt" | "images" | "location"> & {
   createdAt: string;
   location: LocationData;
   images: ImageData[];
+};
+
+export type SafeReservation = Omit<
+  Reservation,
+  "createdAt" | "startDate" | "endDate" | "listing"
+> & {
+  createdAt: string;
+  startDate: string;
+  endDate: string;
+  listing: SafeListing;
 };
 
 export function transformLocation(location: Prisma.JsonValue): LocationData {

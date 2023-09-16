@@ -2,13 +2,15 @@
 
 import React, { FunctionComponent } from "react";
 import { IconType } from "react-icons";
+import { twMerge } from "tailwind-merge";
 
 interface ButtonProps {
   label?: string;
   disabled?: boolean;
-  type?: "primary" | "secondary" | "outline" | "ghost";
+  type?: "primary" | "secondary" | "outline" | "ghost" | "transparent";
   small?: boolean;
   width?: number | string;
+  className?: string;
   icon?: IconType;
   iconComp?: React.ReactNode;
   onClick?: () => void;
@@ -19,7 +21,7 @@ const Button: FunctionComponent<ButtonProps> = ({
   disabled,
   type = "primary",
   small,
-  width = "full",
+  className,
   icon: Icon,
   iconComp,
   onClick,
@@ -30,16 +32,19 @@ const Button: FunctionComponent<ButtonProps> = ({
     outline: "text-sm bg-white border-black text-black hover:bg-neutral-100",
     ghost:
       "bg-transparent text-black underline hover:bg-neutral-100 border-none",
+    transparent:
+      "text-sm bg-gray-200/80 border-none whitespace-nowrap hover:bg-gray-200",
   };
   return (
     <button
-      className={`relative disabled:opacity-70 disabled:cursor-not-allowed rounded-lg transition w-${width} ${
-        styles[type]
-      } ${
+      className={twMerge(
+        "relative disabled:opacity-70 disabled:cursor-not-allowed rounded-lg transition w-full",
         small
           ? "py-1 px-2 text-sm font-light border-[1px]"
-          : "py-3 px-4 text-md font-semibold border-2"
-      }`}
+          : "py-3 px-4 text-md font-semibold border-2",
+        styles[type],
+        className
+      )}
       disabled={disabled}
       onClick={onClick}
     >

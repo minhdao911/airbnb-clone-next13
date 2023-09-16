@@ -54,7 +54,14 @@ const UserMenu = ({ currentUser }: UserMenuProps) => {
         <div className="absolute right-0 top-12 py-2 text-sm w-[40vw] md:w-4/5 rounded-xl bg-white shadow-md border-t-[1px] cursor-pointer">
           {currentUser ? (
             <>
-              <MenuItem highlighted text="Trips" onClick={() => {}} />
+              <MenuItem
+                highlighted
+                text="Trips"
+                onClick={() => {
+                  router.push("/trips");
+                  setIsOpen(false);
+                }}
+              />
               <MenuItem highlighted text="Wishlists" onClick={() => {}} />
               <hr className="my-2" />
               <MenuItem

@@ -378,19 +378,19 @@ const BecomeAHostPage: FunctionComponent<BecomeAHostProps> = () => {
             "
           >
             <Button
+              className="w-fit"
               type="ghost"
               label="Back"
-              width="fit"
               onClick={() => {
                 if (step === STEPS.CATEGORY) setStarted(false);
                 else onBack();
               }}
             />
             <Button
+              className="w-fit"
               type={step === STEPS.FINAL ? "primary" : "secondary"}
               label={actionLabel}
               iconComp={isLoading && <Loader />}
-              width="fit"
               disabled={nextStepDisabled || isLoading}
               onClick={handleSubmit(onSubmit)}
             />
@@ -404,8 +404,8 @@ const BecomeAHostPage: FunctionComponent<BecomeAHostProps> = () => {
             "
           >
             <Button
+              className="w-fit"
               label="Get started"
-              width="fit"
               onClick={() => setStarted(true)}
             />
           </div>
