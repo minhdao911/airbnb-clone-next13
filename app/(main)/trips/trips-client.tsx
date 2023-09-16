@@ -63,18 +63,16 @@ const TripsClient: FunctionComponent<TripsClientProps> = ({
               gap-8
             "
         >
-          <>
-            {reservations.map((reservation: any) => (
-              <ListingCard
-                key={reservation.id}
-                data={reservation.listing}
-                reservation={reservation}
-                currentUser={currentUser}
-                actionDisabled={isLoading}
-                onCancelReservation={onCancelReservation}
-              />
-            ))}
-          </>
+          {reservations.map((reservation: any) => (
+            <ListingCard
+              key={reservation.id}
+              data={reservation.listing}
+              reservation={reservation}
+              currentUser={currentUser}
+              actionDisabled={isLoading}
+              onCancelReservation={onCancelReservation}
+            />
+          ))}
         </div>
       ) : (
         <div className="w-full grid grid-cols-[400px_minmax(0,_1fr)] border border-gray-200 rounded-xl h-[300px] mt-5">

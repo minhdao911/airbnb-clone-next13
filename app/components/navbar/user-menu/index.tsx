@@ -62,7 +62,14 @@ const UserMenu = ({ currentUser }: UserMenuProps) => {
                   setIsOpen(false);
                 }}
               />
-              <MenuItem highlighted text="Wishlists" onClick={() => {}} />
+              <MenuItem
+                highlighted
+                text="Wishlists"
+                onClick={() => {
+                  router.push("/wishlists");
+                  setIsOpen(false);
+                }}
+              />
               <hr className="my-2" />
               <MenuItem
                 text="Manage listings"
