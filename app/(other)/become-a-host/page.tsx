@@ -41,7 +41,7 @@ interface BecomeAHostProps {}
 
 const cloudinaryUrl = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`;
 
-const BecomeAHost: FunctionComponent<BecomeAHostProps> = () => {
+const BecomeAHostPage: FunctionComponent<BecomeAHostProps> = () => {
   const router = useRouter();
 
   const [step, setStep] = useState(STEPS.CATEGORY);
@@ -264,13 +264,14 @@ const BecomeAHost: FunctionComponent<BecomeAHostProps> = () => {
         case STEPS.IMAGES: {
           Component = (
             <ImagesStep
+              numOfImages={5}
               files={images}
               setValue={(sources) => {
                 setCustomValue("images", sources);
-                if (sources.length > 1) {
-                  setNextStepDisabled(false);
-                } else {
+                if (sources.length < 5) {
                   setNextStepDisabled(true);
+                } else {
+                  setNextStepDisabled(false);
                 }
               }}
             />
@@ -414,4 +415,4 @@ const BecomeAHost: FunctionComponent<BecomeAHostProps> = () => {
   );
 };
 
-export default BecomeAHost;
+export default BecomeAHostPage;

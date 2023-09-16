@@ -11,11 +11,13 @@ import { useDropzone } from "react-dropzone";
 export type UploadedFile = File & { preview: string };
 
 interface ImagesStepProps {
+  numOfImages: number;
   files: UploadedFile[];
   setValue(files: UploadedFile[]): void;
 }
 
 const ImagesStep: FunctionComponent<ImagesStepProps> = ({
+  numOfImages,
   files,
   setValue,
 }) => {
@@ -55,7 +57,7 @@ const ImagesStep: FunctionComponent<ImagesStepProps> = ({
     <>
       <Heading
         title="Add some photos of your apartment"
-        subtitle="You'll need 3 photos to get started. You can add more or make changes later."
+        subtitle={`You'll need ${numOfImages} photos to get started. You can add more or make changes later.`}
         titleStyle={{
           marginTop: 100,
           fontSize: "2rem",

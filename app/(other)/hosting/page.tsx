@@ -1,12 +1,12 @@
 import getCurrentUser from "@/app/actions/getCurrentUser";
-import { getListingsByUser } from "@/app/actions/getListings";
+import getListingsByUser from "@/app/actions/getListingsByUser";
 import ClientOnly from "@/app/components/client-only";
 import Container from "@/app/components/container";
 import { SafeUser } from "@/app/types";
 import ListingCard from "@/app/components/listings/listing-card";
 import HostingMenu from "@/app/components/hosting-menu";
 
-const Hosting = async () => {
+const HostingPage = async () => {
   const currentUser = (await getCurrentUser()) as SafeUser | null;
   const listings = await getListingsByUser(currentUser?.id);
 
@@ -51,4 +51,4 @@ const Hosting = async () => {
   );
 };
 
-export default Hosting;
+export default HostingPage;

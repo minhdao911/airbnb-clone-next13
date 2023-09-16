@@ -4,10 +4,15 @@ import { LocationData } from "@/app/types";
 
 interface MapProps {
   location: LocationData;
-  setValue: (value: any) => void;
+  hasSearchBox?: boolean;
+  setValue?: (value: any) => void;
 }
 
-const Map: FunctionComponent<MapProps> = ({ location, setValue }) => {
+const Map: FunctionComponent<MapProps> = ({
+  location,
+  hasSearchBox = true,
+  setValue,
+}) => {
   const marker = useRef<google.maps.marker.AdvancedMarkerElement>();
   const mapObject = useRef<google.maps.Map>();
 
@@ -95,7 +100,7 @@ const Map: FunctionComponent<MapProps> = ({ location, setValue }) => {
             },
           };
           setLocationText(place.formatted_address as string);
-          setValue(location);
+          setValue && setValue(location);
         }
       });
     }
@@ -140,12 +145,14 @@ const Map: FunctionComponent<MapProps> = ({ location, setValue }) => {
   return (
     <div className="relative">
       <div className="w-full rounded-xl" style={{ height: 650 }} id="map" />
-      <SearchBox
-        locationText={locationText}
-        locationLoading={locationLoading}
-        onPlaceSelected={handlePlaceSelected}
-        onUserLocationSelected={getUserLocation}
-      />
+      {hasSearchBox && (
+        <SearchBox
+          locationText={locationText}
+          locationLoading={locationLoading}
+          onPlaceSelected={handlePlaceSelected}
+          onUserLocationSelected={getUserLocation}
+        />
+      )}
     </div>
   );
 };

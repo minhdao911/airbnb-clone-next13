@@ -19,4 +19,13 @@ html,
 body,
 :root {
   height: 100%;
+  letter-spacing: 0.015em;
+}
+
+.rdrDateRangeWrapper {
+  width: 100%;
+}
+
+.rdrMonth {
+  width: 100% !important;
 }

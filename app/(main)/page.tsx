@@ -4,7 +4,7 @@ import ListingCard from "../components/listings/listing-card";
 import getListings from "../actions/getListings";
 import getCurrentUser from "../actions/getCurrentUser";
 
-export default async function Home() {
+export default async function HomePage() {
   const listings = await getListings();
   const currentUser = await getCurrentUser();
 

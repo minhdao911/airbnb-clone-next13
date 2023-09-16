@@ -4,15 +4,16 @@ import Image from "next/image";
 
 interface AvatarProps {
   src?: string | null;
+  size?: number;
 }
 
-const Avatar = ({ src }: AvatarProps) => {
+const Avatar = ({ src, size = 30 }: AvatarProps) => {
   return (
     <Image
       alt="Avatar"
       className="rounded-full"
-      height="30"
-      width="30"
+      height={size}
+      width={size}
       src={src || "/images/placeholder.jpg"}
     />
   );
