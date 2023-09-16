@@ -4,12 +4,14 @@ import React, { FunctionComponent, useState } from "react";
 import { RangeKeyDict } from "react-date-range";
 import ListingReservationForm from "./listing-reservation-form";
 import { SERVICE_FEE } from "@/constants";
+import { isSameDay } from "date-fns";
 
 interface ListingReservationProps {
   price: number;
   totalPrice: number;
   startDate?: Date;
   endDate?: Date;
+  disabledDates: Date[];
   disabled?: boolean;
   onDateChange: (range: RangeKeyDict) => void;
   onCreateReservation: () => void;
@@ -20,6 +22,7 @@ const ListingReservation: FunctionComponent<ListingReservationProps> = ({
   totalPrice,
   startDate,
   endDate,
+  disabledDates,
   disabled,
   onDateChange,
   onCreateReservation,
@@ -28,14 +31,15 @@ const ListingReservation: FunctionComponent<ListingReservationProps> = ({
 
   const numOfDates =
     startDate && endDate ? endDate?.getDate() - startDate?.getDate() : 0;
-  const isFormValid =
+  const isDateRangeValid =
     startDate &&
     endDate &&
-    startDate.getTime() !== endDate.getTime() &&
-    guests > 0 &&
-    totalPrice > 0
-      ? true
-      : false;
+    disabledDates.filter(
+      (date) => isSameDay(date, startDate) || isSameDay(date, endDate)
+    ).length === 0 &&
+    !isSameDay(startDate, endDate);
+  const isFormValid =
+    isDateRangeValid && guests > 0 && totalPrice > 0 ? true : false;
 
   return (
     <div className="w-full flex flex-col gap-5 bg-white p-5 rounded-lg shadow-lg border border-gray-200">
@@ -48,6 +52,12 @@ const ListingReservation: FunctionComponent<ListingReservationProps> = ({
         startDate={startDate}
         endDate={endDate}
         guests={guests}
+        disabledDates={disabledDates}
+        errorMessage={
+          !isDateRangeValid
+            ? "Listing is unavailable for the selected dates"
+            : ""
+        }
         disabled={!isFormValid || disabled}
         onDateChange={onDateChange}
         onGuestChange={(value) => setGuests(value)}

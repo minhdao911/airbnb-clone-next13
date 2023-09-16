@@ -9,6 +9,8 @@ interface ListingReservationFormProps {
   startDate?: Date;
   endDate?: Date;
   guests: number;
+  disabledDates: Date[];
+  errorMessage?: string;
   disabled?: boolean;
   onDateChange: (range: RangeKeyDict) => void;
   onGuestChange: (value: number) => void;
@@ -21,7 +23,9 @@ const ListingReservationForm: FunctionComponent<
   startDate,
   endDate,
   guests,
+  disabledDates,
   disabled,
+  errorMessage,
   onDateChange,
   onGuestChange,
   onReserve,
@@ -36,6 +40,7 @@ const ListingReservationForm: FunctionComponent<
                 startDate,
                 endDate,
               }}
+              disabledDates={disabledDates}
               onChange={onDateChange}
             />
           }
@@ -72,7 +77,9 @@ const ListingReservationForm: FunctionComponent<
         disabled={disabled}
         onClick={onReserve}
       />
-      <p className="font-light text-sm">You won&apos;t be charged yet</p>
+      <p className="font-light text-sm">
+        {errorMessage || "You won't be charged yet"}
+      </p>
     </div>
   );
 };

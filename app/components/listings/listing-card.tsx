@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-import { SafeListing, SafeReservation, SafeUser } from "@/app/types";
+import { SafeListing, SafeReservationWithListing, SafeUser } from "@/app/types";
 import HeartButton from "../heart-button";
 import Carousel from "../carousel";
 import { useMemo } from "react";
@@ -12,7 +12,7 @@ import Button from "../button";
 
 interface ListingCardProps {
   data: SafeListing;
-  reservation?: SafeReservation;
+  reservation?: SafeReservationWithListing;
   currentUser?: SafeUser | null;
   withFavorite?: boolean;
   actionDisabled?: boolean;

@@ -22,6 +22,7 @@ interface ListingInfoProps {
   user: SafeUser;
   startDate?: Date;
   endDate?: Date;
+  disabledDates: Date[];
   onDateChange: (range: RangeKeyDict) => void;
 }
 
@@ -35,6 +36,7 @@ const ListingInfo: FunctionComponent<ListingInfoProps> = ({
   user,
   startDate,
   endDate,
+  disabledDates,
   onDateChange,
 }) => {
   const categoryData = useMemo(() => {
@@ -84,6 +86,7 @@ const ListingInfo: FunctionComponent<ListingInfoProps> = ({
               startDate,
               endDate,
             }}
+            disabledDates={disabledDates}
             onChange={onDateChange}
           />
         </div>

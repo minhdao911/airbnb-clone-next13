@@ -6,11 +6,12 @@ import ListingInfo from "@/app/components/listings/listing-info";
 import ListingReservation from "@/app/components/listings/listing-reservation";
 import Map from "@/app/components/map/map";
 import useAuthModal from "@/app/hooks/use-auth-modal";
-import { SafeListing, SafeUser } from "@/app/types";
+import { SafeListing, SafeReservation, SafeUser } from "@/app/types";
 import { SERVICE_FEE } from "@/constants";
 import axios from "axios";
+import { eachDayOfInterval } from "date-fns";
 import { useRouter } from "next/navigation";
-import { FunctionComponent, useCallback, useState } from "react";
+import { FunctionComponent, useCallback, useMemo, useState } from "react";
 import { RangeKeyDict } from "react-date-range";
 import toast from "react-hot-toast";
 
@@ -18,11 +19,13 @@ interface ListingClientProps {
   listing: SafeListing & {
     user: SafeUser;
   };
+  reservations: SafeReservation[] | null;
   currentUser: SafeUser | null;
 }
 
 const ListingClient: FunctionComponent<ListingClientProps> = ({
   listing,
+  reservations,
   currentUser,
 }) => {
   const authModal = useAuthModal();
@@ -39,6 +42,22 @@ const ListingClient: FunctionComponent<ListingClientProps> = ({
   const numOfDates =
     startDate && endDate ? endDate?.getDate() - startDate?.getDate() : 0;
   const totalPrice = listing.price * numOfDates + SERVICE_FEE;
+
+  const disabledDates = useMemo(() => {
+    if (!reservations) return [];
+
+    let dates: Date[] = [];
+    reservations.forEach((reservation) => {
+      const range = eachDayOfInterval({
+        start: new Date(reservation.startDate),
+        end: new Date(reservation.endDate),
+      });
+
+      dates = [...dates, ...range];
+    });
+
+    return dates;
+  }, [reservations]);
 
   const onDateChange = (range: RangeKeyDict) => {
     const rangeStartDate = range.selection.startDate;
@@ -107,6 +126,7 @@ const ListingClient: FunctionComponent<ListingClientProps> = ({
               user={listing.user}
               startDate={startDate}
               endDate={endDate}
+              disabledDates={disabledDates}
               onDateChange={onDateChange}
             />
 
@@ -116,6 +136,7 @@ const ListingClient: FunctionComponent<ListingClientProps> = ({
                 totalPrice={totalPrice}
                 startDate={startDate}
                 endDate={endDate}
+                disabledDates={disabledDates}
                 disabled={isLoading}
                 onDateChange={onDateChange}
                 onCreateReservation={onCreateReservation}
