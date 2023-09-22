@@ -4,7 +4,7 @@ import { SafeUser } from "@/app/types";
 import Container from "../container";
 import Categories from "./categories";
 import Logo from "./logo";
-import Search from "./search";
+import Search from "./user-menu/search";
 import UserMenu from "./user-menu";
 
 interface NavbarProps {

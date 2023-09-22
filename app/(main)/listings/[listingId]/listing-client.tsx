@@ -9,7 +9,7 @@ import useAuthModal from "@/app/hooks/use-auth-modal";
 import { SafeListing, SafeSimpleReservation, SafeUser } from "@/app/types";
 import { SERVICE_FEE } from "@/constants";
 import axios from "axios";
-import { eachDayOfInterval } from "date-fns";
+import { addDays, eachDayOfInterval } from "date-fns";
 import { useRouter } from "next/navigation";
 import { FunctionComponent, useCallback, useMemo, useState } from "react";
 import { RangeKeyDict } from "react-date-range";
@@ -32,11 +32,9 @@ const ListingClient: FunctionComponent<ListingClientProps> = ({
   const router = useRouter();
 
   const today = new Date();
-  const tomorrow = new Date(today);
-  tomorrow.setDate(tomorrow.getDate() + 1);
 
   const [startDate, setStartDate] = useState<Date | undefined>(today);
-  const [endDate, setEndDate] = useState<Date | undefined>(tomorrow);
+  const [endDate, setEndDate] = useState<Date | undefined>(addDays(today, 1));
   const [isLoading, setIsLoading] = useState(false);
 
   const numOfDates =
@@ -60,17 +58,8 @@ const ListingClient: FunctionComponent<ListingClientProps> = ({
   }, [reservations]);
 
   const onDateChange = (range: RangeKeyDict) => {
-    const rangeStartDate = range.selection.startDate;
-    const rangeEndDate = range.selection.endDate;
-
-    if (rangeStartDate && rangeEndDate) {
-      if (startDate && rangeStartDate >= startDate) {
-        setStartDate(range.selection.startDate);
-      } else {
-        setStartDate(today);
-      }
-      setEndDate(range.selection.endDate);
-    }
+    setStartDate(range.selection.startDate);
+    setEndDate(range.selection.endDate);
   };
 
   const onCreateReservation = useCallback(() => {

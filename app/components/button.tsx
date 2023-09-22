@@ -13,7 +13,7 @@ interface ButtonProps {
   className?: string;
   icon?: IconType;
   iconComp?: React.ReactNode;
-  onClick?: () => void;
+  onClick?: (e: any) => void;
 }
 
 const Button: FunctionComponent<ButtonProps> = ({

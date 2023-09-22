@@ -1,0 +1,256 @@
+"use client";
+
+import { useCallback, useEffect, useState } from "react";
+import { BiSearch, BiSliderAlt } from "react-icons/bi";
+import { useRouter, useSearchParams } from "next/navigation";
+import { format, formatISO } from "date-fns";
+import qs from "query-string";
+import Counter from "../../../inputs/counter";
+import DatePicker from "../../../inputs/date-picker";
+import SearchField from "./search-field";
+import { RangeKeyDict } from "react-date-range";
+
+const Search = () => {
+  const router = useRouter();
+  const params = useSearchParams();
+
+  const [show, setShow] = useState(false);
+  const [startDate, setStartDate] = useState<Date | undefined>(undefined);
+  const [endDate, setEndDate] = useState<Date | undefined>(undefined);
+  const [guestCount, setGuestCount] = useState(0);
+  const [selected, setSelected] = useState("");
+  const [location, setLocation] = useState("");
+
+  const formattedStartDate = startDate ? format(startDate, "MMM d") : "";
+  const formattedEndDate = endDate ? format(endDate, "MMM d") : "";
+  const guestString = `${guestCount} guest${guestCount > 1 ? "s" : ""}`;
+
+  useEffect(() => {
+    if (!show) {
+      setSelected("");
+    }
+  }, [show]);
+
+  useEffect(() => {
+    if (params?.toString()) {
+      const query = qs.parse(params.toString());
+      if (query.location) {
+        setLocation(query.location as string);
+      }
+      if (query.startDate) {
+        setStartDate(new Date(query.startDate as string));
+      }
+      if (query.endDate) {
+        setEndDate(new Date(query.endDate as string));
+      }
+      if (query.guestCount) {
+        setGuestCount(+query.guestCount);
+      }
+    } else {
+      setLocation("");
+      setStartDate(undefined);
+      setEndDate(undefined);
+      setGuestCount(0);
+    }
+  }, [params]);
+
+  const onDateChange = (range: RangeKeyDict) => {
+    setStartDate(range.selection.startDate);
+    setEndDate(range.selection.endDate);
+  };
+
+  const onSearch = useCallback(() => {
+    const query = {
+      location,
+      startDate: startDate ? formatISO(startDate) : null,
+      endDate: endDate ? formatISO(endDate) : null,
+      guestCount: guestCount > 0 ? guestCount : null,
+    };
+
+    const url = qs.stringifyUrl(
+      {
+        url: "/",
+        query,
+      },
+      { skipNull: true }
+    );
+    router.push(url);
+    setShow(false);
+  }, [startDate, endDate, location, guestCount, router]);
+
+  const searchFields = [
+    {
+      id: "destination",
+      title: "Where",
+      placeholder: "Search destinations",
+      text: location,
+      type: "input",
+      onInputChange: (value: string) => setLocation(value),
+    },
+    {
+      id: "checkin",
+      title: "Check in",
+      placeholder: "Add dates",
+      text: formattedStartDate,
+      popupComp: (
+        <DatePickerPopup
+          startDate={startDate}
+          endDate={endDate}
+          onDateChange={onDateChange}
+        />
+      ),
+    },
+    {
+      id: "checkout",
+      title: "Check out",
+      placeholder: "Add dates",
+      text: formattedEndDate,
+      popupComp: (
+        <DatePickerPopup
+          startDate={startDate}
+          endDate={endDate}
+          onDateChange={onDateChange}
+        />
+      ),
+    },
+    {
+      id: "guest",
+      title: "Who",
+      placeholder: "Add guests",
+      text: guestString,
+      popupComp: (
+        <GuestCounterPopup
+          guestCount={guestCount}
+          onChange={(value) => setGuestCount(value)}
+        />
+      ),
+    },
+  ];
+
+  return (
+    <>
+      <div
+        className="border-[1px] border-gray-100 md:border-gray-200 w-full md:w-auto py-2 rounded-full shadow-md md:shadow-sm hover:shadow-md transition cursor-pointer"
+        onClick={() => setShow(true)}
+      >
+        <div className="pl-6 pr-2 flex md:hidden flex-row justify-between transition">
+          <div className="flex flex-row items-center gap-4">
+            <div className="flex flex-col items-center justify-center">
+              <BiSearch size={20} />
+            </div>
+            <div className="flex flex-col">
+              <div className="text-sm font-semibold">
+                {location || "Anywhere"}
+              </div>
+              <div className="flex flex-row gap-1 text-xs text-gray-500">
+                <span>
+                  {startDate && endDate
+                    ? `${formattedStartDate} - ${formattedEndDate}`
+                    : "Any week"}
+                </span>
+                <span>·</span>
+                <span>{guestCount ? guestString : "Add guests"}</span>
+              </div>
+            </div>
+          </div>
+          <div className="p-2 rounded-full border-[1px]">
+            <BiSliderAlt size={18} />
+          </div>
+        </div>
+        <div className="hidden md:flex flex-row items-center justify-between transition">
+          <div className="text-sm font-semibold pl-6 px-4">
+            {location || "Anywhere"}
+          </div>
+          <div className="text-sm font-semibold px-4 border-x-[1px]">
+            {startDate && endDate
+              ? `${formattedStartDate} - ${formattedEndDate}`
+              : "Any week"}
+          </div>
+          <div className="flex flex-row items-center gap-3 text-sm font-light pl-4 pr-2">
+            <div className="text-gray-500">
+              {guestCount ? guestString : "Add guests"}
+            </div>
+            <div className="p-2 bg-rose-500 rounded-full text-white">
+              <BiSearch size={14} className="stroke-1" />
+            </div>
+          </div>
+        </div>
+      </div>
+      {show && (
+        <>
+          <div
+            className="fixed left-0 bottom-0 top-0 right-0 bg-slate-800/30"
+            onClick={() => setShow(false)}
+          />
+          <div className="absolute left-0 top-0 w-full flex items-center justify-center bg-white pt-5 md:pt-16 pb-5 transition">
+            <div
+              className={`relative flex items-center border border-gray-300 rounded-full ${
+                selected ? "bg-gray-200" : "bg-white"
+              }`}
+            >
+              {searchFields.map((field, index) => (
+                <SearchField
+                  key={field.id}
+                  title={field.title}
+                  placeholder={field.placeholder}
+                  text={field.text}
+                  type={field.type as "default" | "input" | undefined}
+                  isFirst={index === 0}
+                  isLast={index === searchFields.length - 1}
+                  selected={selected === field.id}
+                  popupComp={field.popupComp}
+                  onClick={() => setSelected(field.id)}
+                  onInputChange={field.onInputChange}
+                  onSearch={onSearch}
+                />
+              ))}
+            </div>
+          </div>
+        </>
+      )}
+    </>
+  );
+};
+
+export default Search;
+
+interface DatePickerPopupProps {
+  startDate?: Date;
+  endDate?: Date;
+  onDateChange: (range: any) => void;
+}
+
+const DatePickerPopup = ({
+  startDate,
+  endDate,
+  onDateChange,
+}: DatePickerPopupProps) => {
+  return (
+    <div className="absolute top-20 left-0 w-full border border-gray-100 rounded-xl p-4 shadow-lg bg-white">
+      <DatePicker
+        value={{
+          startDate,
+          endDate,
+        }}
+        months={2}
+        onChange={onDateChange}
+      />
+    </div>
+  );
+};
+
+interface GuestCounterPopupProps {
+  guestCount: number;
+  onChange: (value: number) => void;
+}
+
+const GuestCounterPopup = ({
+  guestCount,
+  onChange,
+}: GuestCounterPopupProps) => {
+  return (
+    <div className="absolute top-20 right-0 p-4 bg-white border border-gray-100 rounded-xl shadow-lg w-[300px]">
+      <Counter title="Guests" value={guestCount} onChange={onChange} />
+    </div>
+  );
+};

@@ -29,8 +29,7 @@ const useFavorite = ({ listingId, currentUser }: IUseFavorite) => {
 
       try {
         if (hasFavorited) {
-          const response = await axios.delete(`/api/favorites/${listingId}`);
-          console.log(response);
+          await axios.delete(`/api/favorites/${listingId}`);
           toast.success("Item removed from favorites");
         } else {
           await axios.post(`/api/favorites/${listingId}`);
