@@ -3,7 +3,7 @@
 import { SafeUser } from "@/app/types";
 import { FunctionComponent, useMemo } from "react";
 import { BsDot } from "react-icons/bs";
-import { DateRange, RangeKeyDict } from "react-date-range";
+import { RangeKeyDict } from "react-date-range";
 import Avatar from "../avatar";
 import ListingCategory from "./listing-category";
 import { categories } from "../navbar/categories";

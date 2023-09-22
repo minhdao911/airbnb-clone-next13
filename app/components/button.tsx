@@ -38,7 +38,7 @@ const Button: FunctionComponent<ButtonProps> = ({
   return (
     <button
       className={twMerge(
-        "relative disabled:opacity-70 disabled:cursor-not-allowed rounded-lg transition w-full",
+        "relative flex items-center justify-center gap-1 disabled:opacity-70 disabled:cursor-not-allowed rounded-lg transition w-full",
         small
           ? "py-1 px-2 text-sm font-light border-[1px]"
           : "py-3 px-4 text-md font-semibold border-2",
@@ -48,7 +48,7 @@ const Button: FunctionComponent<ButtonProps> = ({
       disabled={disabled}
       onClick={onClick}
     >
-      {Icon && <Icon size={20} className="absolute left-4 top-3" />}
+      {Icon && <Icon size={20} />}
       {iconComp}
       {label}
     </button>
