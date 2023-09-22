@@ -10,8 +10,9 @@ With following features:
 - Listings deletion ✔️
 - Booking / Reservation system ✔️
 - Favorites system ✔️
-- Advanced search algorithm (filtering feature)
-- Shareable URL filters
+- Advanced search algorithm (filtering feature) ✔️
+- Shareable URL filters ✔️
+- Language and currency selection
 
 ### Built with
 
