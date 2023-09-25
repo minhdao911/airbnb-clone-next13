@@ -14,7 +14,8 @@
       "anywhere": "Anywhere",
       "anyWeek": "Any week",
       "addGuests": "Add guests",
-      "guest": "guest",
+      "guest": "{{count}} guest",
+      "guest_other": "{{count}} guests",
       "location": {
         "title": "Where",
         "placeholder": "Search destinations"

@@ -14,7 +14,7 @@
       "anywhere": "Địa điểm bất kì",
       "anyWeek": "Tuần bất kì",
       "addGuests": "Thêm khách",
-      "guest": "khách",
+      "guest": "{{count}} khách",
       "location": {
         "title": "Địa điểm",
         "placeholder": "Tìm kiếm điểm đến"

@@ -29,9 +29,7 @@ const Search = () => {
 
   const formattedStartDate = startDate ? format(startDate, "MMM d") : "";
   const formattedEndDate = endDate ? format(endDate, "MMM d") : "";
-  const guestString = `${guestCount} ${t("navbar.searchBar.guest")}${
-    guestCount > 1 ? "s" : ""
-  }`;
+  const guestString = t("navbar.searchBar.guest", { count: guestCount });
 
   useEffect(() => {
     if (!show) {
