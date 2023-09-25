@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import PlaceholderImg from "@/public/images/placeholder.jpg";
 
 interface AvatarProps {
   src?: string | null;
@@ -14,7 +15,7 @@ const Avatar = ({ src, size = 30 }: AvatarProps) => {
       className="rounded-full"
       height={size}
       width={size}
-      src={src || "/images/placeholder.jpg"}
+      src={src || PlaceholderImg}
       loading="lazy"
     />
   );

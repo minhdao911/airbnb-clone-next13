@@ -13,6 +13,7 @@ import { toast } from "react-hot-toast";
 import { format, isFuture, isPast } from "date-fns";
 import useLocale from "@/app/hooks/use-locale";
 import { useTranslation } from "@/i18n/client";
+import FamilyImg from "@/public/images/family.avif";
 
 interface TripsClientProps {
   reservations: SafeReservation[] | null;
@@ -113,7 +114,7 @@ const TripsClient: FunctionComponent<TripsClientProps> = ({
           </div>
           <Image
             className="h-[300px] object-cover rounded-r-xl"
-            src="/images/family.avif"
+            src={FamilyImg}
             width={1000}
             height={300}
             alt="Trips image"

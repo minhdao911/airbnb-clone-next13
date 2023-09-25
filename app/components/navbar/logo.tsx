@@ -3,6 +3,7 @@
 import useLocale from "@/app/hooks/use-locale";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import LogoImg from "@/public/images/logo.png";
 
 const Logo = () => {
   const router = useRouter();
@@ -12,9 +13,9 @@ const Logo = () => {
     <Image
       alt="Logo"
       className="hidden md:block cursor-pointer z-10"
-      height="100"
+      height="35"
       width="100"
-      src="/images/logo.png"
+      src={LogoImg}
       loading="lazy"
       onClick={() => router.push(`${locale}/home`)}
     />

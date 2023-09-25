@@ -30,6 +30,7 @@ const AuthModal = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<FieldValues>({
     defaultValues: {
       name: "",
@@ -45,7 +46,9 @@ const AuthModal = () => {
       axios
         .post(`/api/register`, data)
         .then(() => {
-          authModal.onClose();
+          toast.success("Successfully registered");
+          reset();
+          authModal.onOpen("login");
         })
         .catch((error) => {
           toast.error("Something went wrong.");
