@@ -2,10 +2,13 @@
 
 import { FunctionComponent } from "react";
 import Heading from "../heading";
-import Map, { Location } from "../map/map";
+import Map from "../map/map";
+import { LocationData } from "@/app/types";
+import useLocale from "@/app/hooks/use-locale";
+import { useTranslation } from "@/i18n/client";
 
 interface LocationStepProps {
-  location: Location;
+  location: LocationData;
   setValue: (value: any) => void;
 }
 
@@ -13,11 +16,14 @@ const LocationStep: FunctionComponent<LocationStepProps> = ({
   location,
   setValue,
 }) => {
+  const { locale } = useLocale();
+  const { t } = useTranslation(locale, "become-a-host");
+
   return (
     <>
       <Heading
-        title="Where's your place located?"
-        subtitle="Your address is only shared with guests after they’ve made a reservation."
+        title={t("steps.location.title")}
+        subtitle={t("steps.location.subtitle")}
         titleStyle={{
           fontSize: "2rem",
           lineHeight: "2rem",

@@ -6,8 +6,10 @@ import ListingInfo from "@/app/components/listings/listing-info";
 import ListingReservation from "@/app/components/listings/listing-reservation";
 import Map from "@/app/components/map/map";
 import useAuthModal from "@/app/hooks/use-auth-modal";
+import useLocale from "@/app/hooks/use-locale";
 import { SafeListing, SafeSimpleReservation, SafeUser } from "@/app/types";
 import { SERVICE_FEE } from "@/constants";
+import { useTranslation } from "@/i18n/client";
 import axios from "axios";
 import { addDays, eachDayOfInterval } from "date-fns";
 import { useRouter } from "next/navigation";
@@ -30,6 +32,9 @@ const ListingClient: FunctionComponent<ListingClientProps> = ({
 }) => {
   const authModal = useAuthModal();
   const router = useRouter();
+
+  const { locale } = useLocale();
+  const { t } = useTranslation(locale, "listing");
 
   const today = new Date();
 
@@ -134,7 +139,7 @@ const ListingClient: FunctionComponent<ListingClientProps> = ({
           </div>
         </div>
         <div className="pt-10 border-t border-gray-300">
-          <p className="text-2xl">Where you will be</p>
+          <p className="text-2xl">{t("location.title")}</p>
           <p className="font-light my-6 tracking-wide">
             {listing.location.address}
           </p>

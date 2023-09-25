@@ -2,6 +2,9 @@
 
 import { FunctionComponent } from "react";
 import Heading from "../heading";
+import { DEFAULT_CURRENCY } from "@/constants";
+import useLocale from "@/app/hooks/use-locale";
+import { useTranslation } from "@/i18n/client";
 
 interface PriceStepProps {
   price: string;
@@ -11,11 +14,14 @@ interface PriceStepProps {
 const PriceStep: FunctionComponent<PriceStepProps> = ({ price, setValue }) => {
   const id = "price";
 
+  const { locale } = useLocale();
+  const { t } = useTranslation(locale, "become-a-host");
+
   return (
     <div className="w-full h-screen flex flex-col justify-center gap-8">
       <Heading
-        title="Set your price"
-        subtitle="You can change it anytime."
+        title={t("steps.price.title")}
+        subtitle={t("steps.price.subtitle")}
         titleStyle={{
           fontSize: "2rem",
           lineHeight: "2rem",
@@ -33,7 +39,7 @@ const PriceStep: FunctionComponent<PriceStepProps> = ({ price, setValue }) => {
             const number = value.replace(/\D+/g, "");
             setValue(Number(number));
           }}
-          value={`€${price}`}
+          value={`${DEFAULT_CURRENCY}${price}`}
         />
       </div>
     </div>

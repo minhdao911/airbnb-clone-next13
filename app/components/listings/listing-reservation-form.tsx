@@ -4,6 +4,8 @@ import Button from "../button";
 import Counter from "../inputs/counter";
 import DatePicker from "../inputs/date-picker";
 import { RangeKeyDict } from "react-date-range";
+import useLocale from "@/app/hooks/use-locale";
+import { useTranslation } from "@/i18n/client";
 
 interface ListingReservationFormProps {
   startDate?: Date;
@@ -30,6 +32,9 @@ const ListingReservationForm: FunctionComponent<
   onGuestChange,
   onReserve,
 }) => {
+  const { locale } = useLocale();
+  const { t } = useTranslation(locale, "listing");
+
   return (
     <div className="flex flex-col items-center gap-4">
       <div className="w-full flex flex-col border border-gray-400 rounded-lg">
@@ -47,25 +52,29 @@ const ListingReservationForm: FunctionComponent<
         >
           <div className="w-full flex">
             <ReservationInputContent
-              label="Check-in"
+              label={t("reservation.labels.checkin")}
               value={startDate?.toLocaleDateString() || ""}
               borderPosition="right"
             />
             <ReservationInputContent
-              label="Check-out"
+              label={t("reservation.labels.checkout")}
               value={endDate?.toLocaleDateString() || ""}
             />
           </div>
         </ReservationInput>
         <ReservationInput
           popupComp={
-            <Counter title="Guests" value={guests} onChange={onGuestChange} />
+            <Counter
+              title={t("reservation.labels.guestCount")}
+              value={guests}
+              onChange={onGuestChange}
+            />
           }
         >
           <div>
             <ReservationInputContent
-              label="Guests"
-              value={`${guests} guest${guests > 1 ? "s" : ""}`}
+              label={t("reservation.labels.guestCount")}
+              value={t("reservation.guests", { count: guests })}
               borderPosition="top"
             />
           </div>
@@ -73,12 +82,12 @@ const ListingReservationForm: FunctionComponent<
       </div>
       <Button
         type="primary"
-        label="Reserve"
+        label={t("reservation.buttons.reserve")}
         disabled={disabled}
         onClick={onReserve}
       />
       <p className="font-light text-sm">
-        {errorMessage || "You won't be charged yet"}
+        {errorMessage || t("reservation.info.noCharge")}
       </p>
     </div>
   );

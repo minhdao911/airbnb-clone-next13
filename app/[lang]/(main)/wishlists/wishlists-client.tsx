@@ -2,7 +2,9 @@
 
 import Container from "@/app/components/container";
 import ListingCard from "@/app/components/listings/listing-card";
+import useLocale from "@/app/hooks/use-locale";
 import { SafeListing, SafeUser } from "@/app/types";
+import { useTranslation } from "@/i18n/client";
 import { useRouter } from "next/navigation";
 import { FunctionComponent } from "react";
 
@@ -16,15 +18,17 @@ const WishlistsClient: FunctionComponent<WishlistsClientProps> = ({
   currentUser,
 }) => {
   const router = useRouter();
+  const { locale } = useLocale();
+  const { t } = useTranslation(locale, "wishlists");
 
   if (!currentUser) {
-    router.push("/home");
+    router.push(`${locale}/home`);
     return null;
   }
 
   return (
     <Container>
-      <h1 className="text-3xl">Wishlists</h1>
+      <h1 className="text-3xl">{t("title")}</h1>
       <div
         className="
               pt-5

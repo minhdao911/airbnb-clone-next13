@@ -1,4 +1,5 @@
 import prisma from "@/app/libs/prismadb";
+import { transformImages, transformLocation } from "../types";
 
 export default async function getListingsByUser(userId?: string) {
   try {
@@ -17,6 +18,8 @@ export default async function getListingsByUser(userId?: string) {
 
     return listings.map((listing) => ({
       ...listing,
+      images: transformImages(listing.images),
+      location: transformLocation(listing.location),
       createdAt: listing.createdAt.toISOString(),
     }));
   } catch (error: any) {

@@ -1,0 +1,12 @@
+{
+  "title": "Trips",
+  "noTripsBanner": {
+    "title": "No trips booked...yet!",
+    "subtitle": "Time to dust off your bags and start planning your next adventure",
+    "button": "Start searching"
+  },
+  "previousTrips": {
+    "title": "Where you've been",
+    "hostedBy": "Hosted by {{name}}"
+  }
+}

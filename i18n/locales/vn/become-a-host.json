@@ -1,0 +1,79 @@
+{
+  "start": {
+    "mainText": "Bắt đầu trên Airbnb thật dễ dàng",
+    "subText1": {
+      "title": "Chia sẻ thông tin về chỗ ở của bạn cho chúng tôi",
+      "subtitle": "Chia sẻ một số thông tin cơ bản, như vị trí của nhà/phòng cho thuê và số lượng khách có thể ở tại đó."
+    },
+    "subText2": {
+      "title": "Làm cho nhà/phòng cho thuê trở nên nổi bật",
+      "subtitle": "Thêm từ 5 ảnh trở lên cùng với tiêu đề và nội dung mô tả – chúng tôi sẽ giúp bạn thực hiện."
+    },
+    "subText3": {
+      "title": "Hoàn thiện và đăng mục cho thuê",
+      "subtitle": "Lựa chọn xem bạn muốn bắt đầu với việc đón tiếp khách có kinh nghiệm, chọn giá khởi điểm hay đăng mục cho thuê."
+    }
+  },
+  "buttons": {
+    "getStarted": "Bắt đầu",
+    "next": "Tiếp theo",
+    "back": "Quay lại",
+    "submit": "Đăng"
+  },
+  "steps": {
+    "category": {
+      "title": "Điều nào sau đây mô tả chính xác nhất về chỗ ở của bạn?"
+    },
+    "description": {
+      "title": "Tiếp theo, hãy mô tả chỗ ở thuộc danh mục nhà nhỏ của bạn",
+      "subtitle": "Chia sẻ những điều tạo nên nét đặc biệt cho chỗ ở của bạn."
+    },
+    "images": {
+      "title": "Bổ sung một số bức ảnh chụp chỗ ở thuộc danh mục nhà nhỏ của bạn",
+      "subtitle": "Bạn sẽ cần 5 bức ảnh để bắt đầu. Về sau, bạn vẫn có thể đăng thêm hoặc thay đổi ảnh."
+    },
+    "info": {
+      "title": "Chia sẻ một số thông tin cơ bản về chỗ ở của bạn",
+      "subtitle": "au này, bạn sẽ bổ sung những thông tin khác, như loại giường chẳng hạn.",
+      "fields": {
+        "guests": "Khách",
+        "bedrooms": "Phòng ngủ",
+        "beds": "Giường",
+        "bathrooms": "Phòng tắm"
+      }
+    },
+    "location": {
+      "title": "Chỗ ở của bạn nằm ở đâu?",
+      "subtitle": "Địa chỉ của bạn chỉ được chia sẻ với khách sau khi họ đặt phòng thành công."
+    },
+    "price": {
+      "title": "Bây giờ, hãy đặt mức giá mà bạn muốn",
+      "subtitle": "Bạn có thể thay đổi giá này bất cứ lúc nào."
+    },
+    "title": {
+      "title": "Bây giờ, hãy đặt tiêu đề cho chỗ ở thuộc danh mục nhà nhỏ của bạn",
+      "subtitle": "Tiêu đề ngắn cho hiệu quả tốt nhất. Đừng lo lắng, bạn luôn có thể thay đổi tiêu đề sau."
+    },
+    "final": {
+      "title": "Thật tuyệt! Đã đến lúc đăng cho thuê.",
+      "subtitle": "Dưới đây là những thông tin mà chúng tôi sẽ hiển thị cho khách. Hãy đảm bảo bạn đã kiểm tra kỹ thông tin trước khi đăng.",
+      "previewCard": {
+        "title": "Tiếp theo là gì?",
+        "content1": {
+          "title": "Thiết lập lịch",
+          "subtitle": "Chọn ngày đón tiếp khách. Sau 24 giờ kể từ thời điểm bạn đăng, khách có thể đặt chỗ ở của bạn."
+        },
+        "content2": {
+          "title": "Điều chỉnh các chế độ cài đặt của bạn",
+          "subtitle": "Đặt ra nội quy nhà, chọn chính sách hủy, chọn cách thức đặt phòng của khách và nhiều chế độ khác."
+        },
+        "content3": {
+          "title": "Chuẩn bị đón vị khách đầu tiên",
+          "subtitle": "Tìm hiểu các mẹo trong Trung tâm tài nguyên của chúng tôi hoặc nhận sự hướng dẫn trực tiếp từ một Chủ nhà siêu cấp."
+        },
+        "night": "đêm",
+        "new": "Mới"
+      }
+    }
+  }
+}

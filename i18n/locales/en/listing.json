@@ -1,0 +1,50 @@
+{
+  "card": {
+    "night": "night",
+    "buttons": {
+      "viewListing": "View listing",
+      "cancelReservation": "Cancel reservation"
+    }
+  },
+  "info": {
+    "hostedBy": "Hosted by {{name}}",
+    "guestCount": "{{count}} guest",
+    "guestCount_other": "{{count}} guests",
+    "bedroomCount": "{{count}} bedroom",
+    "bedroomCount_other": "{{count}} bedrooms",
+    "bedCount": "{{count}} bed",
+    "bedCount_other": "{{count}} beds",
+    "bathroomCount": "{{count}} bath",
+    "bathroomCount_other": "{{count}} baths",
+    "datePicker": {
+      "title": "Select check-in date",
+      "subtitle": "Add your travel dates for exact pricing"
+    }
+  },
+  "reservation": {
+    "pricePerNight": "{{currency}} {{price}} x {{count}} night",
+    "pricePerNight_other": "{{currency}} {{price}} x {{count}} nights",
+    "night": "night",
+    "serviceFee": "Service fee",
+    "total": "Total",
+    "guests": "{{count}} guest",
+    "guests_other": "{{count}} guests",
+    "labels": {
+      "checkin": "Check-in",
+      "checkout": "Check-out",
+      "guestCount": "Guests"
+    },
+    "buttons": {
+      "reserve": "Reserve"
+    },
+    "info": {
+      "noCharge": "You won't be charged yet"
+    },
+    "errors": {
+      "invalidDates": "This property is unavailable for the selected dates"
+    }
+  },
+  "location": {
+    "title": "Where you will be"
+  }
+}

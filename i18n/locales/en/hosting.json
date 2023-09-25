@@ -1,0 +1,5 @@
+{
+  "title": "Welcome back, {{name}}",
+  "subtitle": "Your listings",
+  "noListings": "You don't have any listings"
+}

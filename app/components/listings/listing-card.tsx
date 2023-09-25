@@ -9,6 +9,9 @@ import Carousel from "../carousel";
 import { useMemo } from "react";
 import { format } from "date-fns";
 import Button from "../button";
+import { DEFAULT_CURRENCY, categories } from "@/constants";
+import useLocale from "@/app/hooks/use-locale";
+import { useTranslation } from "@/i18n/client";
 
 interface ListingCardProps {
   data: SafeListing;
@@ -28,6 +31,9 @@ const ListingCard: React.FC<ListingCardProps> = ({
   onCancelReservation,
 }) => {
   const router = useRouter();
+  const { locale } = useLocale();
+  const { t } = useTranslation(locale, "listing");
+  const commonT = useTranslation(locale, "common");
 
   const reservationDate = useMemo(() => {
     if (!reservation) {
@@ -40,9 +46,14 @@ const ListingCard: React.FC<ListingCardProps> = ({
     return `${format(start, "PP")} - ${format(end, "PP")}`;
   }, [reservation]);
 
+  const getCategoryByLocale = () =>
+    categories(commonT.t).find((c) => data.category === c.id)?.label;
+
   return (
     <div
-      onClick={() => !reservation && router.push(`/listings/${data.id}`)}
+      onClick={() =>
+        !reservation && router.push(`${locale}/listings/${data.id}`)
+      }
       className="col-span-1 cursor-pointer group"
     >
       <div className="flex flex-col gap-2 w-full">
@@ -102,13 +113,13 @@ const ListingCard: React.FC<ListingCardProps> = ({
             <div className="absolute-center hidden group-hover:flex flex-col gap-3 transition">
               <Button
                 type="transparent"
-                label="View listing"
+                label={t("card.buttons.viewListing")}
                 onClick={() => router.push(`/listings/${data.id}`)}
               />
               <Button
                 className="bg-rose-500/80 text-white hover:bg-rose-500"
                 type="transparent"
-                label="Cancel reservation"
+                label={t("card.buttons.cancelReservation")}
                 disabled={actionDisabled}
                 onClick={() => {
                   onCancelReservation && onCancelReservation(reservation.id);
@@ -120,14 +131,15 @@ const ListingCard: React.FC<ListingCardProps> = ({
         <div>
           <div className="font-medium">{data.location.shortAddress}</div>
           <div className="font-light text-neutral-500 -mt-1">
-            {reservation ? reservationDate : data.category}
+            {reservation ? reservationDate : getCategoryByLocale()}
           </div>
         </div>
         <div className="flex flex-row items-center gap-1 -mt-1">
           <div className="font-semibold">
-            €{reservation ? reservation.totalPrice : data.price}
+            {DEFAULT_CURRENCY}
+            {reservation ? reservation.totalPrice : data.price}
           </div>
-          {!reservation && <div className="font-light">night</div>}
+          {!reservation && <div className="font-light">{t("card.night")}</div>}
         </div>
       </div>
     </div>

@@ -2,9 +2,9 @@
 
 import { FunctionComponent } from "react";
 import Heading from "../heading";
-import { categories } from "../navbar/categories";
-
-type Category = (typeof categories)[0];
+import { Category, categories } from "@/constants";
+import useLocale from "@/app/hooks/use-locale";
+import { useTranslation } from "@/i18n/client";
 
 interface CategoryStepProps {
   selected: Category;
@@ -15,10 +15,14 @@ const CategoryStep: FunctionComponent<CategoryStepProps> = ({
   selected,
   setValue,
 }) => {
+  const { locale } = useLocale();
+  const { t } = useTranslation(locale, "become-a-host");
+  const commonT = useTranslation(locale, "common");
+
   return (
     <>
       <Heading
-        title="Which of these best describes your place?"
+        title={t("steps.category.title")}
         titleStyle={{
           fontSize: "2rem",
           lineHeight: "2rem",
@@ -33,7 +37,7 @@ const CategoryStep: FunctionComponent<CategoryStepProps> = ({
             text-md
         "
       >
-        {categories.map((item, index) => {
+        {categories(commonT.t).map((item, index) => {
           const Icon = item.icon;
           return (
             <div
@@ -50,7 +54,7 @@ const CategoryStep: FunctionComponent<CategoryStepProps> = ({
                 cursor-pointer
                 hover:shadow-[0_0_0_2px_black]
                 ${
-                  selected?.label === item.label
+                  selected?.id === item.id
                     ? "bg-neutral-100 shadow-[0_0_0_2px_black]"
                     : "bg-white"
                 }

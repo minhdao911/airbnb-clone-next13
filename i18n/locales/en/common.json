@@ -1,0 +1,117 @@
+{
+  "navbar": {
+    "userMenu": {
+      "becomeAHost": "Airbnb your home",
+      "trips": "Trips",
+      "wishlists": "Wishlists",
+      "listings": "Manage listings",
+      "logOut": "Log out",
+      "logIn": "Log in",
+      "signUp": "Sign up",
+      "help": "Help"
+    },
+    "searchBar": {
+      "anywhere": "Anywhere",
+      "anyWeek": "Any week",
+      "addGuests": "Add guests",
+      "guest": "guest",
+      "location": {
+        "title": "Where",
+        "placeholder": "Search destinations"
+      },
+      "startDate": {
+        "title": "Check in",
+        "placeholder": "Add dates"
+      },
+      "endDate": {
+        "title": "Check out",
+        "placeholder": "Add dates"
+      },
+      "guestCount": {
+        "title": "Who",
+        "placeholder": "Add guests"
+      }
+    }
+  },
+  "categories": {
+    "beach": {
+      "label": "Beach",
+      "description": "This property is close to the beach!"
+    },
+    "windmills": {
+      "label": "Windmills",
+      "description": "This property has windmills!"
+    },
+    "modern": {
+      "label": "Modern",
+      "description": "This property is modern!"
+    },
+    "countryside": {
+      "label": "Countryside",
+      "description": "This property is in the countryside!"
+    },
+    "pools": {
+      "label": "Pools",
+      "description": "This is property has a beautiful pool!"
+    },
+    "islands": {
+      "label": "Islands",
+      "description": "This property is on an island!"
+    },
+    "lake": {
+      "label": "Lake",
+      "description": "This property is near a lake!"
+    },
+    "skiing": {
+      "label": "Skiing",
+      "description": "This property has skiing activies!"
+    },
+    "castles": {
+      "label": "Castles",
+      "description": "This property is an ancient castle!"
+    },
+    "caves": {
+      "label": "Caves",
+      "description": "This property is in a spooky cave!"
+    },
+    "camping": {
+      "label": "Camping",
+      "description": "This property offers camping activities!"
+    },
+    "arctic": {
+      "label": "Arctic",
+      "description": "This property is in arctic environment!"
+    },
+    "desert": {
+      "label": "Desert",
+      "description": "This property is in the desert!"
+    },
+    "barns": {
+      "label": "Barns",
+      "description": "This property is in a barn!"
+    },
+    "lux": {
+      "label": "Lux",
+      "description": "This property is brand new and luxurious!"
+    }
+  },
+  "authModal": {
+    "welcome": "Welcome to Airbnb",
+    "createAccount": "Create an account",
+    "loginToAccount": "Login to your account",
+    "inputs": {
+      "email": "Email",
+      "name": "Name",
+      "password": "Password"
+    },
+    "actionButtons": {
+      "google": "Continue with Google",
+      "github": "Continue with Github"
+    },
+    "subActionButtons": {
+      "hasAccount": "Already have an account?",
+      "login": "Log in",
+      "firstTimeUse": "First time using Airbnb?"
+    }
+  }
+}

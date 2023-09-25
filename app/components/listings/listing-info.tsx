@@ -6,11 +6,13 @@ import { BsDot } from "react-icons/bs";
 import { RangeKeyDict } from "react-date-range";
 import Avatar from "../avatar";
 import ListingCategory from "./listing-category";
-import { categories } from "../navbar/categories";
+import DatePicker from "../inputs/date-picker";
+import { useTranslation } from "@/i18n/client";
+import { categories } from "@/constants";
 
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
-import DatePicker from "../inputs/date-picker";
+import useLocale from "@/app/hooks/use-locale";
 
 interface ListingInfoProps {
   guestCount: number;
@@ -39,9 +41,14 @@ const ListingInfo: FunctionComponent<ListingInfoProps> = ({
   disabledDates,
   onDateChange,
 }) => {
+  const { locale } = useLocale();
+  const { t } = useTranslation(locale, "listing");
+  const commonT = useTranslation(locale, "common");
+
   const categoryData = useMemo(() => {
-    const data = categories.find((c) => c.label === category);
+    const data = categories(commonT.t).find((c) => c.label === category);
     return data;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category]);
 
   return (
@@ -49,15 +56,17 @@ const ListingInfo: FunctionComponent<ListingInfoProps> = ({
       <InfoBlock>
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-1.5">
-            <p className="text-2xl font-medium">Hosted by {user.name}</p>
+            <p className="text-2xl font-medium">
+              {t("info.hostedBy", { name: user.name })}
+            </p>
             <div className="flex items-center gap-1.5">
-              <p>{guestCount} guests</p>
+              <p>{t("info.guestCount", { count: guestCount })}</p>
               <BsDot size={7} />
-              <p>{bedroomCount} bedrooms</p>
+              <p>{t("info.bedroomCount", { count: bedroomCount })}</p>
               <BsDot size={7} />
-              <p>{bedCount} beds</p>
+              <p>{t("info.bedCount", { count: bedCount })}</p>
               <BsDot size={7} />
-              <p>{bathroomCount} baths</p>
+              <p>{t("info.bathroomCount", { count: bathroomCount })}</p>
             </div>
           </div>
           <Avatar src={user.image} size={45} />
@@ -76,9 +85,9 @@ const ListingInfo: FunctionComponent<ListingInfoProps> = ({
       <InfoBlock hasSeparator={false}>
         <div className="flex flex-col gap-5">
           <div>
-            <p className="text-2xl">Select check-in date</p>
+            <p className="text-2xl">{t("info.datePicker.title")}</p>
             <p className="text-sm text-gray-500 mt-1">
-              Add your travel dates for exact pricing
+              {t("info.datePicker.subtitle")}
             </p>
           </div>
           <DatePicker

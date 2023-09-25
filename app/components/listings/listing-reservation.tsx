@@ -3,8 +3,10 @@
 import React, { FunctionComponent, useState } from "react";
 import { RangeKeyDict } from "react-date-range";
 import ListingReservationForm from "./listing-reservation-form";
-import { SERVICE_FEE } from "@/constants";
+import { DEFAULT_CURRENCY, SERVICE_FEE } from "@/constants";
 import { isSameDay } from "date-fns";
+import useLocale from "@/app/hooks/use-locale";
+import { useTranslation } from "@/i18n/client";
 
 interface ListingReservationProps {
   price: number;
@@ -29,6 +31,9 @@ const ListingReservation: FunctionComponent<ListingReservationProps> = ({
 }) => {
   const [guests, setGuests] = useState(1);
 
+  const { locale } = useLocale();
+  const { t } = useTranslation(locale, "listing");
+
   const numOfDates =
     startDate && endDate ? endDate?.getDate() - startDate?.getDate() : 0;
   const isDateRangeValid =
@@ -44,9 +49,9 @@ const ListingReservation: FunctionComponent<ListingReservationProps> = ({
   return (
     <div className="w-full flex flex-col gap-5 bg-white p-5 rounded-lg shadow-lg border border-gray-200">
       <div className="flex items-end gap-1 text-lg font-light">
-        <p className="text-xl font-bold">€</p>
+        <p className="text-xl font-bold">{DEFAULT_CURRENCY}</p>
         <p className="text-xl font-bold">{price}</p>
-        night
+        {t("reservation.night")}
       </div>
       <ListingReservationForm
         startDate={startDate}
@@ -54,9 +59,7 @@ const ListingReservation: FunctionComponent<ListingReservationProps> = ({
         guests={guests}
         disabledDates={disabledDates}
         errorMessage={
-          !isDateRangeValid
-            ? "Listing is unavailable for the selected dates"
-            : ""
+          !isDateRangeValid ? t("reservation.errors.invalidDates") : ""
         }
         disabled={!isFormValid || disabled}
         onDateChange={onDateChange}
@@ -67,18 +70,28 @@ const ListingReservation: FunctionComponent<ListingReservationProps> = ({
         <div className="flex flex-col gap-2 mb-5 font-light">
           <div className="flex items-center justify-between">
             <p className="underline">
-              € {price} x {numOfDates} night{numOfDates > 1 ? "s" : ""}
+              {t("reservation.pricePerNight", {
+                currency: DEFAULT_CURRENCY,
+                price: price,
+                count: numOfDates,
+              })}
             </p>
-            <p>€ {price * numOfDates}</p>
+            <p>
+              {DEFAULT_CURRENCY} {price * numOfDates}
+            </p>
           </div>
           <div className="flex items-center justify-between">
-            <p className="underline">Service fee</p>
-            <p>€ {SERVICE_FEE}</p>
+            <p className="underline">{t("reservation.serviceFee")}</p>
+            <p>
+              {DEFAULT_CURRENCY} {SERVICE_FEE}
+            </p>
           </div>
         </div>
         <div className="flex items-center justify-between pt-5 border-t border-gray-200 font-semibold">
-          <p>Total</p>
-          <p>€ {totalPrice}</p>
+          <p>{t("reservation.total")}</p>
+          <p>
+            {DEFAULT_CURRENCY} {totalPrice}
+          </p>
         </div>
       </div>
     </div>

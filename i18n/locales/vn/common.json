@@ -1,0 +1,117 @@
+{
+  "navbar": {
+    "userMenu": {
+      "becomeAHost": "Cho thuê chỗ ở qua Airbnb",
+      "trips": "Chuyến đi",
+      "wishlists": "Danh sách yêu thích",
+      "listings": "Quản lí nhà/phòng cho thuê",
+      "logOut": "Đăng xuất",
+      "logIn": "Đăng nhập",
+      "signUp": "Đăng kí",
+      "help": "Trung tâm trợ giúp"
+    },
+    "searchBar": {
+      "anywhere": "Địa điểm bất kì",
+      "anyWeek": "Tuần bất kì",
+      "addGuests": "Thêm khách",
+      "guest": "khách",
+      "location": {
+        "title": "Địa điểm",
+        "placeholder": "Tìm kiếm điểm đến"
+      },
+      "startDate": {
+        "title": "Nhận phòng",
+        "placeholder": "Thêm ngày"
+      },
+      "endDate": {
+        "title": "Trả phòng",
+        "placeholder": "Thêm ngày"
+      },
+      "guestCount": {
+        "title": "Khách",
+        "placeholder": "Thêm khách"
+      }
+    }
+  },
+  "categories": {
+    "beach": {
+      "label": "Bãi biển",
+      "description": "Chỗ nghỉ này nằm gần bãi biển!"
+    },
+    "windmills": {
+      "label": "Cối xay gió",
+      "description": "Chỗ nghỉ này có cối xay gió!"
+    },
+    "modern": {
+      "label": "Hiện đại",
+      "description": "Chỗ nghỉ này hiện đại!"
+    },
+    "countryside": {
+      "label": "Nông thôn",
+      "description": "Chỗ nghỉ này ở vùng nông thôn!"
+    },
+    "pools": {
+      "label": "Hồ bơi",
+      "description": "Chỗ nghỉ này có hồ bơi!"
+    },
+    "islands": {
+      "label": "Đảo",
+      "description": "Chỗ nghỉ này nằm trên đảo!"
+    },
+    "lake": {
+      "label": "Hồ",
+      "description": "Chỗ nghỉ này gần hồ!"
+    },
+    "skiing": {
+      "label": "Trượt tuyết",
+      "description": "Chỗ nghỉ này có hoạt động trượt tuyết!"
+    },
+    "castles": {
+      "label": "Lâu đài",
+      "description": "Chỗ nghỉ này là lâu đài cổ xưa!"
+    },
+    "caves": {
+      "label": "Hang động",
+      "description": "Chỗ nghỉ này ở trong một hang động!"
+    },
+    "camping": {
+      "label": "Cắm trại",
+      "description": "Chỗ nghỉ này cung cấp các hoạt động cắm trại!"
+    },
+    "arctic": {
+      "label": "Bắc cực",
+      "description": "Chỗ nghỉ này ở Bắc cực!"
+    },
+    "desert": {
+      "label": "Sa mạc",
+      "description": "Chỗ nghỉ này ở trên sa mạc!"
+    },
+    "barns": {
+      "label": "Nông trại",
+      "description": "Chỗ nghỉ này có nông trại!"
+    },
+    "lux": {
+      "label": "Sang trọng",
+      "description": "Chỗ nghỉ này mới và sang trọng!"
+    }
+  },
+  "authModal": {
+    "welcome": "Chào mừng bạn đến với Airbnb",
+    "createAccount": "Tạo tài khoản",
+    "loginToAccount": "Đăng nhập vào tài khoản",
+    "inputs": {
+      "email": "Email",
+      "name": "Tên",
+      "password": "Mật khẩu"
+    },
+    "actionButtons": {
+      "google": "Tiếp tục với Google",
+      "github": "Tiếp tục với Github"
+    },
+    "subActionButtons": {
+      "hasAccount": "Đã có tài khoản?",
+      "login": "Đăng nhập",
+      "firstTimeUse": "Lần đầu dùng Airbnb?"
+    }
+  }
+}

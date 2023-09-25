@@ -11,6 +11,8 @@ import Image from "next/image";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { format, isFuture, isPast } from "date-fns";
+import useLocale from "@/app/hooks/use-locale";
+import { useTranslation } from "@/i18n/client";
 
 interface TripsClientProps {
   reservations: SafeReservation[] | null;
@@ -22,6 +24,8 @@ const TripsClient: FunctionComponent<TripsClientProps> = ({
   currentUser,
 }: TripsClientProps) => {
   const router = useRouter();
+  const { locale } = useLocale();
+  const { t } = useTranslation(locale, "trips");
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -60,13 +64,13 @@ const TripsClient: FunctionComponent<TripsClientProps> = ({
   );
 
   if (!currentUser) {
-    router.push("/home");
+    router.push(`${locale}/home`);
     return null;
   }
 
   return (
     <Container>
-      <h1 className="text-3xl">Trips</h1>
+      <h1 className="text-3xl">{t("title")}</h1>
       {upcomingTrips.length > 0 ? (
         <div
           className="
@@ -95,15 +99,16 @@ const TripsClient: FunctionComponent<TripsClientProps> = ({
           <div className="p-10 flex flex-col gap-5">
             <MdOutlineWavingHand className="text-rose-500" size={50} />
             <div>
-              <p className="text-lg font-semibold">No trips booked...yet!</p>
+              <p className="text-lg font-semibold">
+                {t("noTripsBanner.title")}
+              </p>
               <p className="text-sm text-gray-500 font-light">
-                Time to dust off your bags and start planning your next
-                adventure
+                {t("noTripsBanner.subtitle")}
               </p>
             </div>
             <Button
-              label="Start searching"
-              onClick={() => router.push("/home")}
+              label={t("noTripsBanner.button")}
+              onClick={() => router.push(`${locale}/home`)}
             />
           </div>
           <Image
@@ -112,12 +117,13 @@ const TripsClient: FunctionComponent<TripsClientProps> = ({
             width={1000}
             height={300}
             alt="Trips image"
+            loading="lazy"
           />
         </div>
       )}
       {previousTrips.length > 0 && (
         <>
-          <h2 className="text-xl mt-10">Where you&apos;ve been</h2>
+          <h2 className="text-xl mt-10">{t("previousTrips.title")}</h2>
           <div
             className="
               mt-5
@@ -136,7 +142,10 @@ const TripsClient: FunctionComponent<TripsClientProps> = ({
                 host={trip.user.name || ""}
                 startDate={new Date(trip.startDate)}
                 endDate={new Date(trip.endDate)}
-                onClick={() => router.push(`/listings/${trip.listingId}`)}
+                translator={t}
+                onClick={() =>
+                  router.push(`${locale}/listings/${trip.listingId}`)
+                }
               />
             ))}
           </div>
@@ -154,6 +163,7 @@ interface PastTripCardProps {
   host: string;
   startDate: Date;
   endDate: Date;
+  translator: any;
   onClick: () => void;
 }
 
@@ -163,6 +173,7 @@ const PastTripCard = ({
   host,
   startDate,
   endDate,
+  translator,
   onClick,
 }: PastTripCardProps) => {
   return (
@@ -176,7 +187,9 @@ const PastTripCard = ({
       />
       <div className="flex flex-col gap-1">
         <p className="font-semibold">{location}</p>
-        <p className="text-sm text-gray-500 font-light">Hosted by {host}</p>
+        <p className="text-sm text-gray-500 font-light">
+          {translator("previousTrips.hostedBy", { name: host })}
+        </p>
         <p className="text-sm text-gray-500 font-light">
           {format(startDate, "PP")} - {format(endDate, "PP")}
         </p>

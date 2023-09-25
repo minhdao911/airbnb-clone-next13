@@ -1,6 +1,7 @@
-import getCurrentUser from "../actions/getCurrentUser";
-import ClientOnly from "../components/client-only";
-import Navbar from "../components/navbar";
+import getCurrentUser from "../../actions/getCurrentUser";
+import ClientOnly from "../../components/client-only";
+import LanguageModal from "../../components/modals/language-modal";
+import Navbar from "../../components/navbar";
 
 export default async function MainLayout({
   children,
@@ -13,6 +14,7 @@ export default async function MainLayout({
     <>
       <ClientOnly>
         <Navbar currentUser={currentUser} />
+        <LanguageModal />
       </ClientOnly>
       <div className="pb-20 pt-28">{children}</div>
     </>

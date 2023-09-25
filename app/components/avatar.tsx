@@ -15,6 +15,7 @@ const Avatar = ({ src, size = 30 }: AvatarProps) => {
       height={size}
       width={size}
       src={src || "/images/placeholder.jpg"}
+      loading="lazy"
     />
   );
 };

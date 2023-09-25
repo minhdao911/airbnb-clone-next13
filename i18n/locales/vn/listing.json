@@ -1,0 +1,44 @@
+{
+  "card": {
+    "night": "đêm",
+    "buttons": {
+      "viewListing": "Xem thông tin",
+      "cancelReservation": "Huỷ đặt phòng"
+    }
+  },
+  "info": {
+    "hostedBy": "Chủ nhà/Người tổ chức: {{name}}",
+    "guestCount": "{{count}} khách",
+    "bedroomCount": "{{count}} phòng ngủ",
+    "bedCount": "{{count}} giường",
+    "bathroomCount": "{{count}} phòng tắm",
+    "datePicker": {
+      "title": "Chọn ngày nhận phòng",
+      "subtitle": "Thêm ngày nhận và trả phòng để có thông tin giá chính xác"
+    }
+  },
+  "reservation": {
+    "pricePerNight": "{{currency}} {{price}} x {{count}} đêm",
+    "night": "đêm",
+    "serviceFee": "Phí dịch vụ",
+    "total": "Tổng",
+    "guests": "{{count}} khách",
+    "labels": {
+      "checkin": "Nhận phòng",
+      "checkout": "Trả phòng",
+      "guestCount": "Khách"
+    },
+    "buttons": {
+      "reserve": "Đặt phòng"
+    },
+    "info": {
+      "noCharge": "Bạn vẫn chưa bị trừ tiền"
+    },
+    "errors": {
+      "invalidDates": "Chỗ nghỉ không có sẵn cho những ngày đã chọn"
+    }
+  },
+  "location": {
+    "title": "Nơi bạn sẽ đến"
+  }
+}

@@ -6,12 +6,14 @@ import { IconType } from "react-icons";
 import qs from "query-string";
 
 interface CategoryBoxProps {
+  id: string;
   icon: IconType;
   label: string;
   selected?: boolean;
 }
 
 const CategoryBox: FunctionComponent<CategoryBoxProps> = ({
+  id,
   icon: Icon,
   label,
   selected,
@@ -28,10 +30,10 @@ const CategoryBox: FunctionComponent<CategoryBoxProps> = ({
 
     const updatedQuery: any = {
       ...currentQuery,
-      category: label,
+      category: id,
     };
 
-    if (params?.get("category") === label) {
+    if (params?.get("category") === id) {
       delete updatedQuery.category;
     }
 
@@ -44,7 +46,7 @@ const CategoryBox: FunctionComponent<CategoryBoxProps> = ({
     );
 
     router.push(url);
-  }, [label, params, router]);
+  }, [id, params, router]);
 
   return (
     <div
@@ -66,7 +68,7 @@ const CategoryBox: FunctionComponent<CategoryBoxProps> = ({
       `}
     >
       <Icon size={22} />
-      <div className="font-medium text-sm">{label}</div>
+      <div className="font-medium text-sm whitespace-nowrap">{label}</div>
     </div>
   );
 };

@@ -56,7 +56,9 @@ export default async function getListings(params: IListingParams) {
 
     if (location) {
       safeListings = safeListings.filter((listing) => {
-        return listing.location.address.includes(location);
+        return listing.location.address
+          .toLowerCase()
+          .includes(location.toLowerCase());
       });
     }
 

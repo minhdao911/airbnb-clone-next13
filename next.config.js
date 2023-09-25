@@ -10,9 +10,6 @@ const nextConfig = {
       "res.cloudinary.com",
     ],
   },
-  async redirects() {
-    return [{ source: "/home", destination: "/", permanent: true }];
-  },
 };
 
 module.exports = nextConfig;

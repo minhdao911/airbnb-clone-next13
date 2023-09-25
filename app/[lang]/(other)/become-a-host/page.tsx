@@ -25,6 +25,8 @@ import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import Loader from "@/app/components/loader";
 import { ImageData } from "@/app/types";
+import useLocale from "@/app/hooks/use-locale";
+import { useTranslation } from "@/i18n/client";
 
 enum STEPS {
   CATEGORY = 0,
@@ -43,6 +45,9 @@ const cloudinaryUrl = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC
 
 const BecomeAHostPage: FunctionComponent<BecomeAHostProps> = () => {
   const router = useRouter();
+
+  const { locale } = useLocale();
+  const { t } = useTranslation(locale, "become-a-host");
 
   const [step, setStep] = useState(STEPS.CATEGORY);
   const [started, setStarted] = useState(false);
@@ -169,10 +174,10 @@ const BecomeAHostPage: FunctionComponent<BecomeAHostProps> = () => {
   const actionLabel = useMemo(() => {
     if (step === STEPS.FINAL) {
       if (isLoading) return "";
-      return "Submit";
+      return t("buttons.submit");
     }
-    return "Next";
-  }, [step, isLoading]);
+    return t("buttons.next");
+  }, [step, isLoading, t]);
 
   const bodyContent = () => {
     if (!started) {
@@ -189,7 +194,7 @@ const BecomeAHostPage: FunctionComponent<BecomeAHostProps> = () => {
           style={{ height: "calc(100vh - 198px)", maxWidth: "60rem" }}
         >
           <Heading
-            title="It’s easy to get started on Airbnb"
+            title={t("start.mainText")}
             titleStyle={{
               fontSize: "3rem",
               lineHeight: "3.5rem",
@@ -198,22 +203,22 @@ const BecomeAHostPage: FunctionComponent<BecomeAHostProps> = () => {
           <div className="flex flex-col">
             <div className="p-5 pb-10">
               <Heading
-                title="Tell us about your place"
-                subtitle="Share some basic info, like where it is and how many guests can stay."
+                title={t("start.subText1.title")}
+                subtitle={t("start.subText1.subtitle")}
               />
             </div>
             <hr />
             <div className="p-5 pb-10">
               <Heading
-                title="Make it stand out"
-                subtitle="Add photos plus a title and description—we’ll help you out."
+                title={t("start.subText2.title")}
+                subtitle={t("start.subText2.subtitle")}
               />
             </div>
             <hr />
             <div className="p-5 pb-10">
               <Heading
-                title="Finish up and publish"
-                subtitle="Choose if you'd like to start with an experienced guest, set a starting price, and publish your listing."
+                title={t("start.subText3.title")}
+                subtitle={t("start.subText3.subtitle")}
               />
             </div>
           </div>
@@ -364,7 +369,7 @@ const BecomeAHostPage: FunctionComponent<BecomeAHostProps> = () => {
         <FaAirbnb
           size={35}
           className="cursor-pointer"
-          onClick={() => router.push("/home")}
+          onClick={() => router.push(`${locale}/home`)}
         />
       </div>
       {bodyContent()}
@@ -380,7 +385,7 @@ const BecomeAHostPage: FunctionComponent<BecomeAHostProps> = () => {
             <Button
               className="w-fit"
               type="ghost"
-              label="Back"
+              label={t("buttons.back")}
               onClick={() => {
                 if (step === STEPS.CATEGORY) setStarted(false);
                 else onBack();
@@ -405,7 +410,7 @@ const BecomeAHostPage: FunctionComponent<BecomeAHostProps> = () => {
           >
             <Button
               className="w-fit"
-              label="Get started"
+              label={t("buttons.getStarted")}
               onClick={() => setStarted(true)}
             />
           </div>

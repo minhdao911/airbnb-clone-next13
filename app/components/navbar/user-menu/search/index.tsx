@@ -9,10 +9,15 @@ import Counter from "../../../inputs/counter";
 import DatePicker from "../../../inputs/date-picker";
 import SearchField from "./search-field";
 import { RangeKeyDict } from "react-date-range";
+import { useTranslation } from "@/i18n/client";
+import useLocale from "@/app/hooks/use-locale";
 
 const Search = () => {
   const router = useRouter();
   const params = useSearchParams();
+
+  const { locale } = useLocale();
+  const { t } = useTranslation(locale, "common");
 
   const [show, setShow] = useState(false);
   const [startDate, setStartDate] = useState<Date | undefined>(undefined);
@@ -23,7 +28,9 @@ const Search = () => {
 
   const formattedStartDate = startDate ? format(startDate, "MMM d") : "";
   const formattedEndDate = endDate ? format(endDate, "MMM d") : "";
-  const guestString = `${guestCount} guest${guestCount > 1 ? "s" : ""}`;
+  const guestString = `${guestCount} ${t("navbar.searchBar.guest")}${
+    guestCount > 1 ? "s" : ""
+  }`;
 
   useEffect(() => {
     if (!show) {
@@ -61,7 +68,7 @@ const Search = () => {
 
   const onSearch = useCallback(() => {
     const query = {
-      location,
+      location: location || null,
       startDate: startDate ? formatISO(startDate) : null,
       endDate: endDate ? formatISO(endDate) : null,
       guestCount: guestCount > 0 ? guestCount : null,
@@ -69,28 +76,28 @@ const Search = () => {
 
     const url = qs.stringifyUrl(
       {
-        url: "/",
+        url: `/${locale}/`,
         query,
       },
       { skipNull: true }
     );
     router.push(url);
     setShow(false);
-  }, [startDate, endDate, location, guestCount, router]);
+  }, [startDate, endDate, location, guestCount, router, locale]);
 
   const searchFields = [
     {
-      id: "destination",
-      title: "Where",
-      placeholder: "Search destinations",
+      id: "location",
+      title: t("navbar.searchBar.location.title"),
+      placeholder: t("navbar.searchBar.location.placeholder"),
       text: location,
       type: "input",
       onInputChange: (value: string) => setLocation(value),
     },
     {
       id: "checkin",
-      title: "Check in",
-      placeholder: "Add dates",
+      title: t("navbar.searchBar.startDate.title"),
+      placeholder: t("navbar.searchBar.startDate.placeholder"),
       text: formattedStartDate,
       popupComp: (
         <DatePickerPopup
@@ -102,8 +109,8 @@ const Search = () => {
     },
     {
       id: "checkout",
-      title: "Check out",
-      placeholder: "Add dates",
+      title: t("navbar.searchBar.endDate.title"),
+      placeholder: t("navbar.searchBar.endDate.placeholder"),
       text: formattedEndDate,
       popupComp: (
         <DatePickerPopup
@@ -115,8 +122,8 @@ const Search = () => {
     },
     {
       id: "guest",
-      title: "Who",
-      placeholder: "Add guests",
+      title: t("navbar.searchBar.guestCount.title"),
+      placeholder: t("navbar.searchBar.guestCount.placeholder"),
       text: guestString,
       popupComp: (
         <GuestCounterPopup
@@ -140,16 +147,18 @@ const Search = () => {
             </div>
             <div className="flex flex-col">
               <div className="text-sm font-semibold">
-                {location || "Anywhere"}
+                {location || t("navbar.searchBar.anywhere")}
               </div>
               <div className="flex flex-row gap-1 text-xs text-gray-500">
                 <span>
                   {startDate && endDate
                     ? `${formattedStartDate} - ${formattedEndDate}`
-                    : "Any week"}
+                    : t("navbar.searchBar.anyWeek")}
                 </span>
                 <span>·</span>
-                <span>{guestCount ? guestString : "Add guests"}</span>
+                <span>
+                  {guestCount ? guestString : t("navbar.searchBar.addGuests")}
+                </span>
               </div>
             </div>
           </div>
@@ -159,16 +168,16 @@ const Search = () => {
         </div>
         <div className="hidden md:flex flex-row items-center justify-between transition">
           <div className="text-sm font-semibold pl-6 px-4">
-            {location || "Anywhere"}
+            {location || t("navbar.searchBar.anywhere")}
           </div>
           <div className="text-sm font-semibold px-4 border-x-[1px]">
             {startDate && endDate
               ? `${formattedStartDate} - ${formattedEndDate}`
-              : "Any week"}
+              : t("navbar.searchBar.anyWeek")}
           </div>
           <div className="flex flex-row items-center gap-3 text-sm font-light pl-4 pr-2">
             <div className="text-gray-500">
-              {guestCount ? guestString : "Add guests"}
+              {guestCount ? guestString : t("navbar.searchBar.addGuests")}
             </div>
             <div className="p-2 bg-rose-500 rounded-full text-white">
               <BiSearch size={14} className="stroke-1" />

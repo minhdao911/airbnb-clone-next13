@@ -6,6 +6,9 @@ import { AiFillStar } from "react-icons/ai";
 import { BsPeople } from "react-icons/bs";
 import Heading from "../heading";
 import Image from "next/image";
+import { DEFAULT_CURRENCY } from "@/constants";
+import useLocale from "@/app/hooks/use-locale";
+import { useTranslation } from "@/i18n/client";
 
 interface FinalStepProps {
   title: string;
@@ -13,23 +16,20 @@ interface FinalStepProps {
   imageSrc: string;
 }
 
-const content = [
+const content = (t: any) => [
   {
-    title: "Set up your calendar",
-    subtitle:
-      "Choose which dates are available. Guests can start booking 24 hours after you publish.",
+    title: t("steps.final.previewCard.content1.title"),
+    subtitle: t("steps.final.previewCard.content1.subtitle"),
     icon: TfiCalendar,
   },
   {
-    title: "Adjust your settings",
-    subtitle:
-      "Set house rules, select a cancellation policy, choose how guests can book, and more.",
+    title: t("steps.final.previewCard.content2.title"),
+    subtitle: t("steps.final.previewCard.content2.subtitle"),
     icon: TfiPencil,
   },
   {
-    title: "Prepare for your first guest",
-    subtitle:
-      "Find tips in our Resource Center or get one-to-one guidance from a Superhost.",
+    title: t("steps.final.previewCard.content3.title"),
+    subtitle: t("steps.final.previewCard.content3.subtitle"),
     icon: BsPeople,
   },
 ];
@@ -39,11 +39,14 @@ const FinalStep: FunctionComponent<FinalStepProps> = ({
   price,
   imageSrc,
 }) => {
+  const { locale } = useLocale();
+  const { t } = useTranslation(locale, "become-a-host");
+
   return (
     <div className="w-full h-screen flex flex-col justify-center gap-8">
       <Heading
-        title="Yay! It’s time to publish."
-        subtitle="Here's what we'll show to guests. Before you publish, make sure to review the details."
+        title={t("steps.final.title")}
+        subtitle={t("steps.final.subtitle")}
         titleStyle={{
           fontSize: "3rem",
           lineHeight: "3rem",
@@ -51,10 +54,15 @@ const FinalStep: FunctionComponent<FinalStepProps> = ({
         subtitleStyle={{ fontSize: "1.25rem" }}
       />
       <div className="flex w-full gap-[4rem] items-center">
-        <PreviewCard title={title} price={price} imageSrc={imageSrc} />
+        <PreviewCard
+          title={title}
+          price={price}
+          imageSrc={imageSrc}
+          translator={t}
+        />
         <div className="flex flex-col gap-8 w-full">
-          <p className="text-2xl">What&apos;s next?</p>
-          {content.map(({ title, subtitle, icon: Icon }, index) => (
+          <p className="text-2xl">{t("steps.final.previewCard.title")}</p>
+          {content(t).map(({ title, subtitle, icon: Icon }, index) => (
             <div key={index} className="flex justify-start gap-6">
               <Icon className="h-fit" size={50} />
               <Heading
@@ -84,9 +92,15 @@ interface PreviewCardProps {
   title: string;
   price: number;
   imageSrc: string;
+  translator: any;
 }
 
-const PreviewCard = ({ title, price, imageSrc }: PreviewCardProps) => {
+const PreviewCard = ({
+  title,
+  price,
+  imageSrc,
+  translator,
+}: PreviewCardProps) => {
   return (
     <div className="p-4 rounded-lg shadow-lg bg-white w-full">
       <Image
@@ -100,11 +114,15 @@ const PreviewCard = ({ title, price, imageSrc }: PreviewCardProps) => {
         <div>
           <p className="font-semibold">{title}</p>
           <p>
-            <span className="font-bold">€{price}</span> night
+            <span className="font-bold">
+              {DEFAULT_CURRENCY}
+              {price}
+            </span>{" "}
+            {translator("steps.final.previewCard.night")}
           </p>
         </div>
         <div className="flex items-center gap-1">
-          <p>New</p>
+          <p>{translator("steps.final.previewCard.new")}</p>
           <AiFillStar size={15} />
         </div>
       </div>

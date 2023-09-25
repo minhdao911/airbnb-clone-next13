@@ -32,7 +32,7 @@ export async function POST(request: Request) {
 
   const listing = await prisma.listing.create({
     data: {
-      category: category.label,
+      category: category.id,
       location,
       guestCount,
       bedroomCount,

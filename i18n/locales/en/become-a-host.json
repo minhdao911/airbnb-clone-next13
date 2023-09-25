@@ -1,0 +1,79 @@
+{
+  "start": {
+    "mainText": "It’s easy to get started on Airbnb",
+    "subText1": {
+      "title": "Tell us about your place",
+      "subtitle": "Share some basic info, like where it is and how many guests can stay."
+    },
+    "subText2": {
+      "title": "Make it stand out",
+      "subtitle": "Add photos plus a title and description—we’ll help you out."
+    },
+    "subText3": {
+      "title": "Finish up and publish",
+      "subtitle": "Choose if you'd like to start with an experienced guest, set a starting price, and publish your listing."
+    }
+  },
+  "buttons": {
+    "getStarted": "Get started",
+    "next": "Next",
+    "back": "Back",
+    "submit": "Submit"
+  },
+  "steps": {
+    "category": {
+      "title": "Which of these best describes your place?"
+    },
+    "description": {
+      "title": "Next, let's describe your apartment",
+      "subtitle": "Share what makes your place special."
+    },
+    "images": {
+      "title": "Add some photos of your apartment",
+      "subtitle": "You'll need {{count}} photos to get started. You can add more or make changes later."
+    },
+    "info": {
+      "title": "Share some basics about your place",
+      "subtitle": "You'll add more details later, like bed types.",
+      "fields": {
+        "guests": "Guests",
+        "bedrooms": "Bedrooms",
+        "beds": "Beds",
+        "bathrooms": "Bathrooms"
+      }
+    },
+    "location": {
+      "title": "Where's your place located?",
+      "subtitle": "Your address is only shared with guests after they’ve made a reservation."
+    },
+    "price": {
+      "title": "Set your price",
+      "subtitle": "You can change it anytime."
+    },
+    "title": {
+      "title": "Now, let's give your apartment a title",
+      "subtitle": "Short titles work best. Have fun with it—you can always change it later."
+    },
+    "final": {
+      "title": "Yay! It’s time to publish.",
+      "subtitle": "Here's what we'll show to guests. Before you publish, make sure to review the details.",
+      "previewCard": {
+        "title": "What's next?",
+        "content1": {
+          "title": "Set up your calendar",
+          "subtitle": "Choose which dates are available. Guests can start booking 24 hours after you publish."
+        },
+        "content2": {
+          "title": "Adjust your settings",
+          "subtitle": "Set house rules, select a cancellation policy, choose how guests can book, and more."
+        },
+        "content3": {
+          "title": "Prepare for your first guest",
+          "subtitle": "Find tips in our Resource Center or get one-to-one guidance from a Superhost."
+        },
+        "night": "night",
+        "new": "New"
+      }
+    }
+  }
+}

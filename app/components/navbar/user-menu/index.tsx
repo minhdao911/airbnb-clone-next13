@@ -8,6 +8,9 @@ import { BiGlobe, BiMenu } from "react-icons/bi";
 import Avatar from "../../avatar";
 import MenuItem from "./menu-item";
 import { useRouter } from "next/navigation";
+import useLanguageModal from "@/app/hooks/use-language-modal";
+import { useTranslation } from "@/i18n/client";
+import useLocale from "@/app/hooks/use-locale";
 
 interface UserMenuProps {
   currentUser?: SafeUser | null;
@@ -17,6 +20,11 @@ const UserMenu = ({ currentUser }: UserMenuProps) => {
   const router = useRouter();
 
   const authModal = useAuthModal();
+  const langModal = useLanguageModal();
+
+  const { locale } = useLocale();
+  const { t } = useTranslation(locale, "common");
+
   const [isOpen, setIsOpen] = useState(false);
 
   const onRent = useCallback(() => {
@@ -24,8 +32,8 @@ const UserMenu = ({ currentUser }: UserMenuProps) => {
       return authModal.onOpen("login");
     }
 
-    router.push("/become-a-host");
-  }, [currentUser, authModal, router]);
+    router.push(`${locale}/become-a-host`);
+  }, [currentUser, authModal, router, locale]);
 
   return (
     <div className="relative hidden md:flex flex-row items-center justify-center transition">
@@ -33,9 +41,12 @@ const UserMenu = ({ currentUser }: UserMenuProps) => {
         className="text-sm font-semibold px-4 py-3 rounded-full hover:bg-neutral-100 transition cursor-pointer"
         onClick={onRent}
       >
-        Airbnb your home
+        {t("navbar.userMenu.becomeAHost")}
       </div>
-      <div className="p-3 mr-2 rounded-full hover:bg-neutral-100 transition cursor-pointer">
+      <div
+        className="p-3 mr-2 rounded-full hover:bg-neutral-100 transition cursor-pointer"
+        onClick={langModal.onOpen}
+      >
         <BiGlobe size={18} />
       </div>
       <div
@@ -51,57 +62,69 @@ const UserMenu = ({ currentUser }: UserMenuProps) => {
       </div>
 
       {isOpen && (
-        <div className="absolute right-0 top-12 py-2 text-sm w-[40vw] md:w-4/5 rounded-xl bg-white shadow-md border-t-[1px] cursor-pointer">
-          {currentUser ? (
-            <>
-              <MenuItem
-                highlighted
-                text="Trips"
-                onClick={() => {
-                  router.push("/trips");
-                  setIsOpen(false);
-                }}
-              />
-              <MenuItem
-                highlighted
-                text="Wishlists"
-                onClick={() => {
-                  router.push("/wishlists");
-                  setIsOpen(false);
-                }}
-              />
-              <hr className="my-2" />
-              <MenuItem
-                text="Manage listings"
-                onClick={() => {
-                  router.push("hosting");
-                }}
-              />
-              <MenuItem text="Log out" onClick={() => signOut()} />
-            </>
-          ) : (
-            <>
-              <MenuItem
-                highlighted
-                text="Sign up"
-                onClick={() => {
-                  authModal.onOpen("register");
-                  setIsOpen(false);
-                }}
-              />
-              <MenuItem
-                text="Log in"
-                onClick={() => {
-                  authModal.onOpen("login");
-                  setIsOpen(false);
-                }}
-              />
-              <hr className="my-2" />
-              <MenuItem text="Airbnb your home" onClick={onRent} />
-              <MenuItem text="Help" onClick={() => {}} />
-            </>
-          )}
-        </div>
+        <>
+          <div
+            className="fixed top-0 left-0 right-0 bottom-0"
+            onClick={() => setIsOpen(false)}
+          />
+          <div className="absolute right-0 top-12 py-2 text-sm w-[40vw] md:w-4/5 rounded-xl bg-white shadow-md border-t-[1px] cursor-pointer">
+            {currentUser ? (
+              <>
+                <MenuItem
+                  highlighted
+                  text={t("navbar.userMenu.trips")}
+                  onClick={() => {
+                    router.push(`${locale}/trips`);
+                    setIsOpen(false);
+                  }}
+                />
+                <MenuItem
+                  highlighted
+                  text={t("navbar.userMenu.wishlists")}
+                  onClick={() => {
+                    router.push(`${locale}/wishlists`);
+                    setIsOpen(false);
+                  }}
+                />
+                <hr className="my-2" />
+                <MenuItem
+                  text={t("navbar.userMenu.listings")}
+                  onClick={() => {
+                    router.push(`${locale}/hosting`);
+                  }}
+                />
+                <MenuItem
+                  text={t("navbar.userMenu.logOut")}
+                  onClick={() => signOut()}
+                />
+              </>
+            ) : (
+              <>
+                <MenuItem
+                  highlighted
+                  text={t("navbar.userMenu.signUp")}
+                  onClick={() => {
+                    authModal.onOpen("register");
+                    setIsOpen(false);
+                  }}
+                />
+                <MenuItem
+                  text={t("navbar.userMenu.logIn")}
+                  onClick={() => {
+                    authModal.onOpen("login");
+                    setIsOpen(false);
+                  }}
+                />
+                <hr className="my-2" />
+                <MenuItem
+                  text={t("navbar.userMenu.becomeAHost")}
+                  onClick={onRent}
+                />
+                <MenuItem text={t("navbar.userMenu.help")} onClick={() => {}} />
+              </>
+            )}
+          </div>
+        </>
       )}
     </div>
   );

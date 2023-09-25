@@ -7,6 +7,8 @@ import ImageUpload, { DropArea } from "../inputs/image-upload";
 import IconButton from "../icon-button";
 import { HiMinus } from "react-icons/hi";
 import { useDropzone } from "react-dropzone";
+import useLocale from "@/app/hooks/use-locale";
+import { useTranslation } from "@/i18n/client";
 
 export type UploadedFile = File & { preview: string };
 
@@ -21,6 +23,9 @@ const ImagesStep: FunctionComponent<ImagesStepProps> = ({
   files,
   setValue,
 }) => {
+  const { locale } = useLocale();
+  const { t } = useTranslation(locale, "become-a-host");
+
   const handleImageDrop = useCallback(
     (acceptedFiles: File[]) => {
       const updatedFiles = files.concat(
@@ -56,8 +61,8 @@ const ImagesStep: FunctionComponent<ImagesStepProps> = ({
   return (
     <>
       <Heading
-        title="Add some photos of your apartment"
-        subtitle={`You'll need ${numOfImages} photos to get started. You can add more or make changes later.`}
+        title={t("steps.images.title")}
+        subtitle={t("steps.images.subtitle", { count: numOfImages })}
         titleStyle={{
           marginTop: 100,
           fontSize: "2rem",

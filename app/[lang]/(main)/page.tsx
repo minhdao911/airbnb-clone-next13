@@ -1,9 +1,9 @@
-import ClientOnly from "../components/client-only";
-import Container from "../components/container";
-import ListingCard from "../components/listings/listing-card";
-import getListings, { IListingParams } from "../actions/getListings";
-import getCurrentUser from "../actions/getCurrentUser";
-import EmptyState from "../components/empty-state";
+import ClientOnly from "../../components/client-only";
+import Container from "../../components/container";
+import ListingCard from "../../components/listings/listing-card";
+import getListings, { IListingParams } from "../../actions/getListings";
+import getCurrentUser from "../../actions/getCurrentUser";
+import EmptyState from "../../components/empty-state";
 
 export default async function HomePage({
   searchParams,
