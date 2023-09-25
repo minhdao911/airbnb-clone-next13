@@ -4,6 +4,9 @@ import ClientOnly from "./components/client-only";
 import AuthModal from "./components/modals/auth-modal";
 import ToasterProvider from "./providers/toaster-provider";
 import Script from "next/script";
+import Provider from "./components/provider";
+
+import "./globals.css";
 
 import "./globals.css";
 import "react-date-range/dist/styles.css";
@@ -32,11 +35,13 @@ export default function RootLayout({
         />
       </head>
       <body className={font.className}>
-        <ClientOnly>
-          <ToasterProvider />
-          <AuthModal />
-        </ClientOnly>
-        {children}
+        <Provider>
+          <ClientOnly>
+            <ToasterProvider />
+            <AuthModal />
+          </ClientOnly>
+          {children}
+        </Provider>
       </body>
     </html>
   );

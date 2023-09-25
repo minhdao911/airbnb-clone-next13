@@ -12,7 +12,7 @@ import { SERVICE_FEE } from "@/constants";
 import { useTranslation } from "@/i18n/client";
 import axios from "axios";
 import { addDays, eachDayOfInterval } from "date-fns";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next-nprogress-bar";
 import { FunctionComponent, useCallback, useMemo, useState } from "react";
 import { RangeKeyDict } from "react-date-range";
 import toast from "react-hot-toast";

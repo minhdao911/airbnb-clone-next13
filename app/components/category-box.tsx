@@ -1,9 +1,10 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { FunctionComponent, useCallback } from "react";
 import { IconType } from "react-icons";
 import qs from "query-string";
+import { useRouter } from "next-nprogress-bar";
 
 interface CategoryBoxProps {
   id: string;

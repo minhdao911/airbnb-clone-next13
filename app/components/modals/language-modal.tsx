@@ -4,7 +4,8 @@ import Modal from "./modal";
 import useLanguageModal from "@/app/hooks/use-language-modal";
 import { LocaleTypes, locales } from "@/i18n/settings";
 import useLocale from "@/app/hooks/use-locale";
-import { useParams, usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
+import { useRouter } from "next-nprogress-bar";
 
 type LangData = {
   locale: LocaleTypes;

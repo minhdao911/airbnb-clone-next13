@@ -12,9 +12,9 @@ import Modal from "./modal";
 import Heading from "../heading";
 import Input from "../inputs/input";
 import Button from "../button";
-import { useRouter } from "next/navigation";
 import { useTranslation } from "@/i18n/client";
 import useLocale from "@/app/hooks/use-locale";
+import { useRouter } from "next-nprogress-bar";
 
 const AuthModal = () => {
   const router = useRouter();

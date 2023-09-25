@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { BiSearch, BiSliderAlt } from "react-icons/bi";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { format, formatISO } from "date-fns";
 import qs from "query-string";
 import Counter from "../../../inputs/counter";
@@ -11,6 +11,7 @@ import SearchField from "./search-field";
 import { RangeKeyDict } from "react-date-range";
 import { useTranslation } from "@/i18n/client";
 import useLocale from "@/app/hooks/use-locale";
+import { useRouter } from "next-nprogress-bar";
 
 const Search = () => {
   const router = useRouter();

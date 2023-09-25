@@ -1,10 +1,9 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-
 import Button from "./button";
 import Heading from "./heading";
 import useLocale from "../hooks/use-locale";
+import { useRouter } from "next-nprogress-bar";
 
 interface EmptyStateProps {
   title: string;

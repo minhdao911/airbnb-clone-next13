@@ -7,10 +7,10 @@ import { useCallback, useState } from "react";
 import { BiGlobe, BiMenu } from "react-icons/bi";
 import Avatar from "../../avatar";
 import MenuItem from "./menu-item";
-import { useRouter } from "next/navigation";
 import useLanguageModal from "@/app/hooks/use-language-modal";
 import { useTranslation } from "@/i18n/client";
 import useLocale from "@/app/hooks/use-locale";
+import { useRouter } from "next-nprogress-bar";
 
 interface UserMenuProps {
   currentUser?: SafeUser | null;

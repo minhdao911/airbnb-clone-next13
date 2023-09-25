@@ -2,8 +2,8 @@
 
 import useLocale from "@/app/hooks/use-locale";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import LogoImg from "@/public/images/logo.png";
+import { useRouter } from "next-nprogress-bar";
 
 const Logo = () => {
   const router = useRouter();

@@ -22,11 +22,11 @@ import PriceStep from "@/app/components/listing-steps/price";
 import FinalStep from "@/app/components/listing-steps/final";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import { useRouter } from "next/navigation";
 import Loader from "@/app/components/loader";
 import { ImageData } from "@/app/types";
 import useLocale from "@/app/hooks/use-locale";
 import { useTranslation } from "@/i18n/client";
+import { useRouter } from "next-nprogress-bar";
 
 enum STEPS {
   CATEGORY = 0,

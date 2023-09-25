@@ -1,10 +1,10 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { FaAirbnb } from "react-icons/fa";
 import { SafeUser } from "../types";
 import Avatar from "./avatar";
 import useLocale from "../hooks/use-locale";
+import { useRouter } from "next-nprogress-bar";
 
 interface HostingMenuProps {
   currentUser: SafeUser | null;

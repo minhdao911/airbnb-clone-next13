@@ -5,7 +5,6 @@ import ListingCard from "@/app/components/listings/listing-card";
 import { SafeReservation, SafeUser } from "@/app/types";
 import { FunctionComponent, useCallback, useMemo, useState } from "react";
 import Button from "@/app/components/button";
-import { useRouter } from "next/navigation";
 import { MdOutlineWavingHand } from "react-icons/md";
 import Image from "next/image";
 import axios from "axios";
@@ -14,6 +13,7 @@ import { format, isFuture, isPast } from "date-fns";
 import useLocale from "@/app/hooks/use-locale";
 import { useTranslation } from "@/i18n/client";
 import FamilyImg from "@/public/images/family.avif";
+import { useRouter } from "next-nprogress-bar";
 
 interface TripsClientProps {
   reservations: SafeReservation[] | null;

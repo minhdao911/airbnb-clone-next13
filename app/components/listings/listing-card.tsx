@@ -1,8 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-
 import { SafeListing, SafeSimpleReservation, SafeUser } from "@/app/types";
 import HeartButton from "../heart-button";
 import Carousel from "../carousel";
@@ -12,6 +10,7 @@ import Button from "../button";
 import { DEFAULT_CURRENCY, categories } from "@/constants";
 import useLocale from "@/app/hooks/use-locale";
 import { useTranslation } from "@/i18n/client";
+import { useRouter } from "next-nprogress-bar";
 
 interface ListingCardProps {
   data: SafeListing;

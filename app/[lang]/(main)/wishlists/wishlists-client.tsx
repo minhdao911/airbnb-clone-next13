@@ -1,13 +1,13 @@
 "use client";
 
+import { FunctionComponent } from "react";
 import Container from "@/app/components/container";
 import EmptyState from "@/app/components/empty-state";
 import ListingCard from "@/app/components/listings/listing-card";
 import useLocale from "@/app/hooks/use-locale";
 import { SafeListing, SafeUser } from "@/app/types";
 import { useTranslation } from "@/i18n/client";
-import { useRouter } from "next/navigation";
-import { FunctionComponent } from "react";
+import { useRouter } from "next-nprogress-bar";
 
 interface WishlistsClientProps {
   listings: SafeListing[];
