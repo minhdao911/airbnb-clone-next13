@@ -17,7 +17,7 @@ const Logo = () => {
       width="100"
       src={LogoImg}
       loading="lazy"
-      onClick={() => router.push(`${locale}/home`)}
+      onClick={() => router.push(`/${locale}`)}
     />
   );
 };

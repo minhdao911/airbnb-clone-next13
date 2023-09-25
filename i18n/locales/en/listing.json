@@ -46,5 +46,9 @@
   },
   "location": {
     "title": "Where you will be"
+  },
+  "noListing": {
+    "title": "Can't find listing",
+    "actionLabel": "Return to home page"
   }
 }

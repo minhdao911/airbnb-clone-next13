@@ -1,6 +1,7 @@
 "use client";
 
 import Container from "@/app/components/container";
+import EmptyState from "@/app/components/empty-state";
 import ListingCard from "@/app/components/listings/listing-card";
 import useLocale from "@/app/hooks/use-locale";
 import { SafeListing, SafeUser } from "@/app/types";
@@ -22,15 +23,16 @@ const WishlistsClient: FunctionComponent<WishlistsClientProps> = ({
   const { t } = useTranslation(locale, "wishlists");
 
   if (!currentUser) {
-    router.push(`${locale}/home`);
+    router.push(`/${locale}`);
     return null;
   }
 
   return (
     <Container>
       <h1 className="text-3xl">{t("title")}</h1>
-      <div
-        className="
+      {listings && listings.length > 0 ? (
+        <div
+          className="
               pt-5
               grid 
               grid-cols-1 
@@ -39,15 +41,21 @@ const WishlistsClient: FunctionComponent<WishlistsClientProps> = ({
               lg:grid-cols-4
               gap-8
             "
-      >
-        {listings.map((listing: any) => (
-          <ListingCard
-            key={listing.id}
-            data={listing}
-            currentUser={currentUser}
-          />
-        ))}
-      </div>
+        >
+          {listings.map((listing: any) => (
+            <ListingCard
+              key={listing.id}
+              data={listing}
+              currentUser={currentUser}
+            />
+          ))}
+        </div>
+      ) : (
+        <EmptyState
+          title={t("noFavorites.title")}
+          actionLabel={t("noFavorites.actionLabel")}
+        />
+      )}
     </Container>
   );
 };

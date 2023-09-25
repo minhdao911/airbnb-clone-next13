@@ -113,5 +113,14 @@
       "login": "Đăng nhập",
       "firstTimeUse": "Lần đầu dùng Airbnb?"
     }
+  },
+  "emptyState": {
+    "defaultTitle": "Không có kết quả",
+    "defaultSubtitle": "Hãy thử thay đổi bộ lọc của bạn.",
+    "defaultActionLabel": "Xóa tất cả bộ lọc"
+  },
+  "errorState": {
+    "title": "Uh Oh",
+    "subtitle": "Đã xảy ra lỗi. Vui lòng thử lại sau ít phút"
   }
 }

@@ -4,19 +4,31 @@ import { useRouter } from "next/navigation";
 
 import Button from "./button";
 import Heading from "./heading";
+import useLocale from "../hooks/use-locale";
 
 interface EmptyStateProps {
-  title?: string;
+  title: string;
   subtitle?: string;
-  showReset?: boolean;
+  actionLabel?: string;
+  onButtonClick?: () => void;
 }
 
 const EmptyState: React.FC<EmptyStateProps> = ({
-  title = "No exact matches",
-  subtitle = "Try changing or removing some of your filters.",
-  showReset,
+  title,
+  subtitle,
+  actionLabel,
+  onButtonClick,
 }) => {
   const router = useRouter();
+  const { locale } = useLocale();
+
+  const onClick = () => {
+    if (onButtonClick) {
+      onButtonClick();
+    } else {
+      router.push(`/${locale}`);
+    }
+  };
 
   return (
     <div
@@ -31,12 +43,8 @@ const EmptyState: React.FC<EmptyStateProps> = ({
     >
       <Heading center title={title} subtitle={subtitle} />
       <div className="w-48 mt-4">
-        {showReset && (
-          <Button
-            type="outline"
-            label="Remove all filters"
-            onClick={() => router.push("/")}
-          />
+        {actionLabel && (
+          <Button type="outline" label={actionLabel} onClick={onClick} />
         )}
       </div>
     </div>

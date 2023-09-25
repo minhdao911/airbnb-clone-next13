@@ -1,6 +1,6 @@
-import { createInstance, use } from "i18next";
+import { createInstance } from "i18next";
 import { LocaleTypes, getOptions } from "./settings";
-import { initReactI18next } from "react-i18next";
+import { initReactI18next } from "react-i18next/initReactI18next";
 import resourcesToBackend from "i18next-resources-to-backend";
 
 const initI18next = async (lang: LocaleTypes, ns: string) => {

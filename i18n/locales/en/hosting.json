@@ -1,5 +1,9 @@
 {
   "title": "Welcome back, {{name}}",
   "subtitle": "Your listings",
-  "noListings": "You don't have any listings"
+  "noListings": {
+    "title": "You don't have any listings",
+    "subtitle": "Try creating a new listing",
+    "actionLabel": "Create listing"
+  }
 }

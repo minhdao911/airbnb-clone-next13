@@ -11,14 +11,11 @@ export function middleware(req: NextRequest) {
   ) {
     // e.g. incoming request is /en/about
     // The new URL is now /about
-    const url = new URL(
-      `${pathname.replace(
-        `/${fallbackLng}`,
-        pathname === `/${fallbackLng}` ? "/" : ""
-      )}${searchParams}`,
-      req.url
-    );
-    return NextResponse.redirect(url);
+    let url = `${pathname.replace(
+      `/${fallbackLng}`,
+      pathname === `/${fallbackLng}` ? "/" : ""
+    )}${searchParams}`;
+    return NextResponse.redirect(new URL(url, req.url));
   }
 
   const pathnameIsMissingLocale = locales.every(
@@ -27,14 +24,8 @@ export function middleware(req: NextRequest) {
   if (pathnameIsMissingLocale) {
     // e.g. incoming request is /about
     // tell Next.js it should pretend it's /en/about
-    const url = new URL(`/${fallbackLng}${pathname}${searchParams}`, req.url);
-    return NextResponse.rewrite(url);
-  }
-
-  if (pathname.includes("/home")) {
-    return NextResponse.redirect(
-      new URL(pathname.replace("/home", ""), req.url)
-    );
+    let url = `/${fallbackLng}${pathname}${searchParams}`;
+    return NextResponse.rewrite(new URL(url, req.url));
   }
 }
 

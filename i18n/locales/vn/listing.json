@@ -40,5 +40,9 @@
   },
   "location": {
     "title": "Nơi bạn sẽ đến"
+  },
+  "noListing": {
+    "title": "Không tìm thấy thông tin phòng/chỗ cho thuê",
+    "actionLabel": "Quay về trang chủ"
   }
 }

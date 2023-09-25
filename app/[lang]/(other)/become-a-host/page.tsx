@@ -132,7 +132,7 @@ const BecomeAHostPage: FunctionComponent<BecomeAHostProps> = () => {
       })
       .then(() => {
         toast.success("Listing created!");
-        router.push("/home");
+        router.push(`/${locale}`);
       })
       .catch((error) => {
         console.log(error);
@@ -369,7 +369,7 @@ const BecomeAHostPage: FunctionComponent<BecomeAHostProps> = () => {
         <FaAirbnb
           size={35}
           className="cursor-pointer"
-          onClick={() => router.push(`${locale}/home`)}
+          onClick={() => router.push(`/${locale}`)}
         />
       </div>
       {bodyContent()}

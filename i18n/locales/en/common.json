@@ -113,5 +113,14 @@
       "login": "Log in",
       "firstTimeUse": "First time using Airbnb?"
     }
+  },
+  "emptyState": {
+    "defaultTitle": "No exact matches",
+    "defaultSubtitle": "Try changing or removing some of your filters.",
+    "defaultActionLabel": "Remove all filters"
+  },
+  "errorState": {
+    "title": "Uh Oh",
+    "subtitle": "Something went wrong"
   }
 }

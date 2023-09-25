@@ -1,3 +1,7 @@
 {
-  "title": "Danh sách yêu thích"
+  "title": "Danh sách yêu thích",
+  "noFavorites": {
+    "title": "Danh sách yêu thích của bạn đang trống",
+    "actionLabel": "Quay về trang chủ"
+  }
 }

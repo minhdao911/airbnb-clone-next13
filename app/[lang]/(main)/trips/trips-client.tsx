@@ -65,7 +65,7 @@ const TripsClient: FunctionComponent<TripsClientProps> = ({
   );
 
   if (!currentUser) {
-    router.push(`${locale}/home`);
+    router.push(`/${locale}`);
     return null;
   }
 
@@ -109,7 +109,7 @@ const TripsClient: FunctionComponent<TripsClientProps> = ({
             </div>
             <Button
               label={t("noTripsBanner.button")}
-              onClick={() => router.push(`${locale}/home`)}
+              onClick={() => router.push(`/${locale}`)}
             />
           </div>
           <Image
