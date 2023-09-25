@@ -12,7 +12,7 @@ With following features:
 - Favorites system ✔️
 - Advanced search algorithm (filtering feature) ✔️
 - Shareable URL filters ✔️
-- Language and currency selection
+- Language selection (i18n) ✔️
 
 ### Built with
 
