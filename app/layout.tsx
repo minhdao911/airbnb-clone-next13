@@ -2,10 +2,12 @@
 import { Nunito } from "next/font/google";
 import ClientOnly from "./components/client-only";
 import AuthModal from "./components/modals/auth-modal";
-
-import "./globals.css";
 import ToasterProvider from "./providers/toaster-provider";
 import Script from "next/script";
+
+import "./globals.css";
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
 
 export const metadata = {
   title: "Airbnb",

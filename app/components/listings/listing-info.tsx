@@ -9,9 +9,6 @@ import ListingCategory from "./listing-category";
 import DatePicker from "../inputs/date-picker";
 import { useTranslation } from "@/i18n/client";
 import { categories } from "@/constants";
-
-import "react-date-range/dist/styles.css";
-import "react-date-range/dist/theme/default.css";
 import useLocale from "@/app/hooks/use-locale";
 
 interface ListingInfoProps {

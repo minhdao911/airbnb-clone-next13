@@ -19,10 +19,9 @@ const supportedLanguages: LangData[] = [
 
 const LanguageModal = () => {
   const router = useRouter();
-  const params = useParams();
   const pathname = usePathname();
   const langModal = useLanguageModal();
-  const { locale, onChange } = useLocale();
+  const { locale } = useLocale();
 
   const bodyContent = (
     <div>
