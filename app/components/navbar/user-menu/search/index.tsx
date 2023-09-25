@@ -93,6 +93,7 @@ const Search = () => {
       text: location,
       type: "input",
       onInputChange: (value: string) => setLocation(value),
+      onClear: () => setLocation(""),
     },
     {
       id: "checkin",
@@ -106,6 +107,7 @@ const Search = () => {
           onDateChange={onDateChange}
         />
       ),
+      onClear: () => setStartDate(undefined),
     },
     {
       id: "checkout",
@@ -119,6 +121,7 @@ const Search = () => {
           onDateChange={onDateChange}
         />
       ),
+      onClear: () => setEndDate(undefined),
     },
     {
       id: "guest",
@@ -131,6 +134,7 @@ const Search = () => {
           onChange={(value) => setGuestCount(value)}
         />
       ),
+      onClear: () => setGuestCount(0),
     },
   ];
 
@@ -210,6 +214,7 @@ const Search = () => {
                   popupComp={field.popupComp}
                   onClick={() => setSelected(field.id)}
                   onInputChange={field.onInputChange}
+                  onClear={field.onClear}
                   onSearch={onSearch}
                 />
               ))}

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { BiSearch } from "react-icons/bi";
 import Button from "../../../button";
+import { IoClose } from "react-icons/io5";
 
 interface SearchFieldProps {
   type?: "default" | "input";
@@ -16,6 +17,7 @@ interface SearchFieldProps {
   onClick: () => void;
   onInputChange?: (value: string) => void;
   onSearch: () => void;
+  onClear: () => void;
 }
 
 const SearchField = ({
@@ -30,8 +32,11 @@ const SearchField = ({
   onClick,
   onInputChange,
   onSearch,
+  onClear,
 }: SearchFieldProps) => {
   const [showPopup, setShowPopup] = useState(false);
+
+  const hasValue = text && text !== "0 guest";
 
   useEffect(() => {
     if (!selected) {
@@ -49,7 +54,7 @@ const SearchField = ({
         }}
       >
         <div
-          className={`flex flex-col gap-1 px-8 ${isLast ? "w-[230px]" : ""}`}
+          className={`flex flex-col gap-1 px-8 ${isLast ? "w-[245px]" : ""}`}
         >
           <Content
             type={type}
@@ -71,8 +76,21 @@ const SearchField = ({
           <div
             className={`relative flex flex-col gap-1 px-8 py-4 ${
               !isFirst ? "pl-[36px]" : ""
-            } ${isLast ? "w-[230px]" : ""}`}
+            } ${isLast ? "w-[245px]" : ""}`}
           >
+            {selected && hasValue && (
+              <div
+                className={`absolute top-1/2 ${
+                  isLast ? "left-[96px]" : "right-3"
+                } -translate-y-1/2 bg-gray-200 rounded-full p-1 z-20 hover:bg-gray-300`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onClear();
+                }}
+              >
+                <IoClose size={14} />
+              </div>
+            )}
             <Content
               type={type}
               title={title}
@@ -116,11 +134,11 @@ const Content = ({
     return (
       <>
         <p className="text-xs font-bold">{title}</p>
-        <p className="text-sm text-gray-500 font-light min-w-[65px]">
+        <p className="text-sm text-gray-500 font-light min-w-[75px]">
           {text || placeholder}
         </p>
         {isLast && (
-          <div className="absolute top-2.5 ml-[74px] z-10">
+          <div className="absolute top-2.5 ml-[92px] z-10">
             <Button
               label="Search"
               icon={BiSearch}
