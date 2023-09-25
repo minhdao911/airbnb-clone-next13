@@ -6,6 +6,7 @@ import { LocaleTypes, locales } from "@/i18n/settings";
 import useLocale from "@/app/hooks/use-locale";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next-nprogress-bar";
+import { useTranslation } from "@/i18n/client";
 
 type LangData = {
   locale: LocaleTypes;
@@ -23,11 +24,12 @@ const LanguageModal = () => {
   const pathname = usePathname();
   const langModal = useLanguageModal();
   const { locale } = useLocale();
+  const { t } = useTranslation(locale, "common");
 
   const bodyContent = (
     <div>
       <h2 className="text-xl font-semibold mb-5">
-        Choose a language and region
+        {t("languageModal.subtitle")}
       </h2>
       <div className="flex gap-4">
         {supportedLanguages.map((item, index) => (
@@ -59,7 +61,7 @@ const LanguageModal = () => {
 
   return (
     <Modal
-      title="Language and region"
+      title={t("languageModal.title")}
       isOpen={langModal.isOpen}
       body={bodyContent}
       onClose={langModal.onClose}

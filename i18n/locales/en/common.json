@@ -115,6 +115,10 @@
       "firstTimeUse": "First time using Airbnb?"
     }
   },
+  "languageModal": {
+    "title": "Language and region",
+    "subtitle": "Choose a language and region"
+  },
   "emptyState": {
     "defaultTitle": "No exact matches",
     "defaultSubtitle": "Try changing or removing some of your filters.",

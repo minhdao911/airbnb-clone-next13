@@ -120,7 +120,6 @@ const UserMenu = ({ currentUser }: UserMenuProps) => {
                   text={t("navbar.userMenu.becomeAHost")}
                   onClick={onRent}
                 />
-                <MenuItem text={t("navbar.userMenu.help")} onClick={() => {}} />
               </>
             )}
           </div>
